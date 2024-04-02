@@ -1,6 +1,8 @@
 # TDDD27_2024_Bilduppladdning och säkerhetskopiera
 
-
+##
+This file is only here to have the old read me file instead of deleting it. 
+If I might want to go back and see something or get help.
 
 ## Getting started
 
