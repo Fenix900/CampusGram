@@ -1,0 +1,40 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 5vh;
+    background:rgb(38, 159, 210);
+    padding-bottom: 10px;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.headerText{
+    color: #75d3ff;
+    font-size: 5vh;
+    font-weight:500;
+}
+
+.userInputs{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 300px;
+    height: 70px;
+    background-color: beige;
+    border-radius: 5px;
+}
