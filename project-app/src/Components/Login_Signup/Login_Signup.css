@@ -3,8 +3,9 @@
     flex-direction: column;
     margin: auto;
     margin-top: 5vh;
-    background:rgb(38, 159, 210);
+    background:rgb(255, 255, 255);
     padding-bottom: 10px;
+    width: 430px;
 }
 
 .header{
@@ -26,7 +27,7 @@
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 20px;
 }
 
 .input{
@@ -34,7 +35,44 @@
     align-items: center;
     margin: auto;
     width: 300px;
-    height: 70px;
-    background-color: beige;
+    height: 50px;
+    background-color: #a8e3ff;
     border-radius: 5px;
+}
+
+.input img{
+    margin: 0px 30px;
+}
+
+.input input{
+     height: 100%;
+     width: 60%;
+     background:transparent;
+     border: none;
+     outline:none;
+     font-size: 15px;
+} 
+
+.actionButtons{
+    display: flex;
+    margin: 30px auto;
+    gap: 50px;
+    padding-right: 5px; /*so they look like they are more centered since one is longer*/
+}
+
+.submitt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:#0099ff;
+    color: rgb(255, 255, 255);
+    width: 100px;
+    height: 40px;
+    border-radius: 80px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.grayOut{
+    background:#bfbfbf;
 }
