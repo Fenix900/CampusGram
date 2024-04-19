@@ -3,7 +3,7 @@
     flex-direction: column;
     margin: auto;
     margin-top: 5vh;
-    background:rgb(255, 255, 255);
+    background:rgb(0, 118, 131);
     padding-bottom: 10px;
     width: 430px;
 }
@@ -36,7 +36,7 @@
     margin: auto;
     width: 300px;
     height: 50px;
-    background-color: #a8e3ff;
+    background-color: #7592a5;
     border-radius: 5px;
 }
 
@@ -50,7 +50,9 @@
      background:transparent;
      border: none;
      outline:none;
-     font-size: 15px;
+     font-size: 15px;    
+     font-weight: 600;
+     color: rgb(0, 0, 0);
 } 
 
 .actionButtons{
@@ -60,19 +62,7 @@
     padding-right: 5px; /*so they look like they are more centered since one is longer*/
 }
 
-.submitt{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background:#0099ff;
-    color: rgb(255, 255, 255);
-    width: 100px;
-    height: 40px;
-    border-radius: 80px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.grayOut{
-    background:#bfbfbf;
+input::placeholder{
+    color: rgb(0, 0, 0);
+    opacity: 0.5;
 }
