@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Text, ButtonGroup } from '@chakra-ui/react' //Just for testing the text
+import { Button, Text } from '@chakra-ui/react' //Just for testing the text
 
 
 export default function Home() {
