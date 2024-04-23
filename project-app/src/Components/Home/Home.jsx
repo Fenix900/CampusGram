@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Text } from '@chakra-ui/react' //Just for testing the text
+import PageLayout from '../Sidebar/PageLayout'
 
 
 export default function Home() {
