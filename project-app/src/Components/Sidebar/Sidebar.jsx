@@ -42,7 +42,7 @@ const Sidebar = () => {
             <Flex direction={'column'} gap={20}  w={"full"} height={"full"}>
                 <Link as={ReactRouterLink} to={'/home'} pl={2} display={{base:"none", md:"block"}} _hover={{bg:"gray.700"}}>
                     <div>
-                        <Text fontSize={'29px'} as='kbd' color='tomato'>
+                        <Text fontSize={'29px'} as='kbd'>
                         CampusGram
                         </Text>
                     </div>
