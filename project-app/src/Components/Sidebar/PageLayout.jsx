@@ -9,7 +9,7 @@ const PageLayout = ({children}) => {
     <Flex>
         {/*This side is for the side bar (LEFT) */}
         {pathname !== '/' ? (        
-        <Box w={{base:"75px", md:"200px"}}> 
+        <Box w={{base:"75px", md:"230px"}}> 
             <Sidebar/>
         </Box>
         ): null}
