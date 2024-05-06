@@ -5,7 +5,7 @@ import password_icon from "../Assets/Password.png"
 import create_user_icon from "../Assets/Signup.png"
 import username_icon from "../Assets/username.png"
 import email_icon from "../Assets/Email.png"
-import { Button } from '@chakra-ui/react'
+import { Button, Text } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
 export const Login_Signup = () => {
@@ -82,6 +82,7 @@ export const Login_Signup = () => {
           <img src={login_button_icon} width={20} alt=''/> Login
         </Button>
       </div>
+      <Text>Dark/Light? You have to sign out to change this</Text>
     </div>
   </div>
   )

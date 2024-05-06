@@ -1,15 +1,15 @@
 import React from 'react'
 import { PostHeader } from './PostHeader'
 import { Image } from '@chakra-ui/react'
-import TestPost from "../Assets/TestPostImage.png"
 import { PostFooter } from './PostFooter'
 
-export const OnePost = () => {
+//This is how one post is struct. (Header then the image and lastly the footer)
+export const OnePost = ({postedImg,username,profilePic}) => {
   return (
     <div>
-      <PostHeader />
-      <Image src={TestPost} />
-      <PostFooter />
+      <PostHeader username={username} profilePic={profilePic}/>
+      <Image src={postedImg} alt={"Whops, couldn't load image from "+ username} my={2}/>
+      <PostFooter username={username}/>
     </div>
   )
 }
