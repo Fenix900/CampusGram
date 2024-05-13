@@ -8,7 +8,7 @@ export const Profile = () => {
   return (
     <div>
         <Container maxW={"container.lg"}>
-            <Flex px={5} pt={10} w={"full"} mx={"auto"} flexDirection={"column"} pb={10}>
+            <Flex px={5} pt={10} w={"full"} mx={"auto"} flexDirection={"column"} pb={{base:2, md:5}}>
                 <ProfileInformation/>
             </Flex>
             <Flex px={{base:2, md:4}} maxW={"full"} mx={"auto"} direction={"column"}>

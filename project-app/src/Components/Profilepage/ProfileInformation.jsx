@@ -7,7 +7,7 @@ export const ProfileInformation = () => {
     //This is the header for the profile page, here we will see the profile image,
     //a description and following/followers/posts
     <div>
-        <Flex py={10} direction={{base:"column", sm:"row"}} gap={2}>
+        <Flex py={7} direction={{base:"column", sm:"row"}} gap={2}>
             <Avatar size={{base:"xl", md:"2xl"}} name='Replace Name' src={ProfileImg} alt="N/A" justifySelf={"flex-start"} alignSelf={"flex-start"} mx={{base:2, md:10}}/>
             <VStack gap={{base:2, md:5}} alignItems={"start"}>
                 <Flex direction={{base:"column", sm:"row"}} justifyContent={{base:"center", sm:"flex-start"}} w={"full"}>
