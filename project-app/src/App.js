@@ -5,6 +5,7 @@ import { Button } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import PageLayout from './Components/Sidebar/PageLayout';
+import { Profile } from './Components/Profilepage/Profile';
 
 function App() {
   return ( 
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login_Signup/>} />
         <Route path='/home' element={<Home/>} />
+        <Route path='/:username' element={<Profile />} />
       </Routes> 
     </PageLayout>
   );
