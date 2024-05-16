@@ -1,4 +1,4 @@
-import { Grid, GridItem, Image } from '@chakra-ui/react'
+import { Grid } from '@chakra-ui/react'
 import React from 'react'
 import ProfileImg from "../Assets/TestProfile.png"
 import { ProfileSinglePost } from './ProfileSinglePost'
