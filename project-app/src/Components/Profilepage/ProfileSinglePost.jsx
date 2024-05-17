@@ -1,8 +1,9 @@
-import { Avatar, Box, Button, Flex, GridItem, Image, Text, useDisclosure } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, GridItem, Image, Input, Text, useDisclosure } from '@chakra-ui/react'
 import React from 'react'
 import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton} from '@chakra-ui/react'
+import Comment from './Comment'
 //This is one post that will show the image with an overlay to see like and comments
-export const ProfileSinglePost = ({img}) => {
+export const ProfileSinglePost = ({img,likes,comments}) => {
     //Hook for open and closing pop-ups
 const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -22,18 +23,19 @@ const { isOpen, onOpen, onClose } = useDisclosure()
             gap={{base:0,sm:3, md:6}}
             alignItems={"center"}>
                 <Flex flexDirection="column" textAlign="center" fontSize={{sm:"md", base:"xs", lg:"xl"}}>
-                    <Text fontWeight={"700"}>Likes</Text> 
-                    20
+                    <Text fontWeight={"700"}>likes</Text> 
+                    {likes}
                 </Flex>
                 <Flex flexDirection="column" textAlign="center" fontSize={{sm:"md", base:"xs", lg:"xl"}}>
                     <Text fontWeight={"700"}>comments</Text>    {/*Replace this and likes with icons */}
-                    5
+                    {comments}
                 </Flex>
             </Flex> 
             <Image src={img} h={"100%"} w={"100%"} objectFit={"cover"}/>
         </GridItem>
 
-        <Modal isOpen={isOpen} onClose={onClose} size={{base:"2xl", md:"3xl"}} isCentered={true}>
+        {/*This part below will show the pop-up window to display image and comments */}
+        <Modal isOpen={isOpen} onClose={onClose} size={{base:"3xl", md:"5xl"}} isCentered={true}>
         <ModalOverlay />
         <ModalContent pb={5}>
             <ModalHeader>
@@ -49,14 +51,28 @@ const { isOpen, onOpen, onClose } = useDisclosure()
                 <Box overflow={"hidden"}>
                     <Image src={img} alt='Could not load'/>
                 </Box>
-
-                <Flex flexDirection={"column"} maxW={{md:"30vh",sm:"20vh", base:"100vh"}} fontSize={{md:"md",sm:"sm", base:"md"}} gap={2}>
+                {/*Fix this so that the comment section title is above all other! at all ti,mes */}
+                <Flex flexDirection={"column"} gap={2}>
                     <Text alignSelf={"center"} fontWeight={"900"} fontSize={"sm"} borderBottom={"1px solid gray"} w={"full"} textAlign={"center"}>Comments section</Text>
-                    <Text>Hello Everyone</Text>
-                    <Text>LOL</Text>
-                    <Text>I really love your image, when will we see more</Text>
-                    <Text>Nah, this isn't it!!!</Text>
-                    <Text>HAHAHAHAHAHAHHAAHAHAHAHAHAHAHAHAAHAHHAHAHAHAHAHAHAHAHAHA</Text>
+                    <Flex 
+                    flexDirection={"column"} 
+                    maxW={{md:"40vw",sm:"50vw", base:"100vw"}} 
+                    fontSize={{md:"md",sm:"sm", base:"md"}} 
+                    gap={2} 
+                    overflowY={"scroll"} 
+                    maxH={{md:"460px",sm:"350px", base:"300px"}}
+                    borderBottom={"1px solid gray"}
+                    mb={2}>
+                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
+                        <Comment username={"Someone who has a really long name"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
+                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
+                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
+                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
+                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
+                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
+                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
+                    </Flex>
+                    <Text>Add the post footer here when merged!</Text>
                 </Flex>
             </Flex>
             </ModalBody>
