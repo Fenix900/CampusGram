@@ -14,6 +14,7 @@ import { auth, firestore } from '../../Firebase/firebase';
 import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 //Help to display errors (as pop-ups)
 import { useDisplayError } from '../../hooks/useDisplayError';
+import useAuthStore from "../../globalStates/authStore"
 
 //Change these to use Chakra components since you started doing this with css 
 
@@ -26,6 +27,9 @@ export const NewUser = () => {
       password:'',
       username:''
   });
+  //
+  const UserLogIn = useAuthStore(state => state.login)
+  //const UserLogOut = useAuthStore(state => state.logout)
 
     //Function to create new user
     const tryCreateNewUser = async () => {
@@ -56,6 +60,7 @@ export const NewUser = () => {
         };
         await setDoc(doc(firestore, "users", userCredential.user.uid), userDocument);
         localStorage.setItem("userProfile", JSON.stringify(userDocument));
+        UserLogIn(userDocument)
         setLoading(false);
         showMessage("Welcome", "User created successfully", "success");
     } catch (e) {
