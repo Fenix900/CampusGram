@@ -3,6 +3,13 @@ import "./Login_Signup.css"
 import { Button } from '@chakra-ui/react'
 import { NewUser } from './NewUser'
 import { Login } from './Login'
+import login_button_icon from "../Assets/login.png"
+import password_icon from "../Assets/Password.png"
+import create_user_icon from "../Assets/Signup.png"
+import username_icon from "../Assets/username.png"
+import email_icon from "../Assets/Email.png"
+import { Button, Text } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 
 export const Login_Signup = () => {
  /*Maybe add forget password here*/
@@ -37,6 +44,7 @@ export const Login_Signup = () => {
           Login?
         </Button>
       </div>
+      <Text>Dark/Light? You have to sign out to change this</Text>
     </div>
   </div>
   )
