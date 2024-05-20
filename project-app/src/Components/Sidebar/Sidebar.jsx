@@ -1,11 +1,30 @@
-import { Avatar, Box, Flex, Image, Link, Text, Tooltip } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Image, Link, Spinner, Text, Toast, Tooltip } from '@chakra-ui/react'
 import React from 'react'
 import {Link as ReactRouterLink} from 'react-router-dom'
 import TestICON from "../Assets/Email.png"
-import signOut from "../Assets/logout.png"
+import signOut_icon from "../Assets/logout.png"
+import {useSignOut} from "react-firebase-hooks/auth"
+import { auth } from '../../Firebase/firebase';
+import { useDisplayError } from '../../hooks/useDisplayError';
+import useAuthStore from "../../globalStates/authStore"
+
 
 //This is the side bar that is being imported to the layout
 const Sidebar = () => {
+    const [signOut, loadilng_logout] = useSignOut(auth);
+    const showMessage = useDisplayError();
+    const UserLogOut = useAuthStore((state) => state.logout)
+    //This function handles logouts
+    const logOutUser = async () => {
+        try {
+            await signOut();
+            localStorage.removeItem('userProfile') 
+            showMessage("Logged out","Bye","warning")
+            UserLogOut();
+        } catch (error) {
+            showMessage("Error",error.message,"error")
+        }
+    }
     //These are the sidebar icons and what they are
     const sidebarItems = [
         {
@@ -42,7 +61,7 @@ const Sidebar = () => {
             <Flex direction={'column'} gap={20}  w={"full"} height={"full"}>
                 <Link as={ReactRouterLink} to={'/home'} pl={2} display={{base:"none", md:"block"}} _hover={{bg:"gray.700"}}>
                     <div>
-                        <Text fontSize={'29px'} as='kbd' color='tomato'>
+                        <Text fontSize={'29px'} as='kbd'>
                         CampusGram
                         </Text>
                     </div>
@@ -77,11 +96,9 @@ const Sidebar = () => {
                     ))}
                 </Flex>
                 {/*signout icon*/}
-                <Tooltip hasArrow  label={"Logout"} placement='right' openDelay={300} ml={2} display={{md:"none", base:"block"}}>
-                    <Link 
-                        display={"flex"}
-                        to={"/"}
-                        as={ReactRouterLink}
+                <Tooltip hasArrow  label={"Lo gout"} placement='right' openDelay={300} ml={2} display={{md:"none", base:"block"}}>
+                    <Flex 
+                        onClick={logOutUser}
                         alignItems={"center"}
                         gap={5}
                         _hover={{bg:"gray.700"}}
@@ -91,9 +108,10 @@ const Sidebar = () => {
                         justifyContent={{base:"center", md:"flex-start"}}
                         mt={"auto"}
                         >
-                        <Image src={signOut} boxSize={{base:"40px",md:"60px"}}></Image>
+                        {//Shows a spinner if it is loading
+                        loadilng_logout ? (<Spinner size="xl" />) : (<Image src={signOut_icon} boxSize={{base:"40px",md:"60px"}}></Image>)}
                         <Box display={{base:"none", md:"block"}}>{"Logout"}</Box>
-                    </Link> 
+                    </Flex> 
                 </Tooltip> 
             </Flex>
         </Box>
