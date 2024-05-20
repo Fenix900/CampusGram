@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import "./Login_Signup.css"
-import login_button_icon from "../Assets/login.png"
-import create_user_icon from "../Assets/Signup.png"
 import { Button } from '@chakra-ui/react'
 import { NewUser } from './NewUser'
 import { Login } from './Login'

@@ -7,18 +7,62 @@ import create_user_icon from "../Assets/Signup.png"
 import React, { useState } from 'react'
 import "./Login_Signup.css"
 import {Button} from '@chakra-ui/react'
-import useNewUserWithEmailAndPassword from '../../hooks/useNewUserWithEmailAndPassword'
 
+//For authentication
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, firestore } from '../../Firebase/firebase';
+import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+//Help to display errors (as pop-ups)
+import { useDisplayError } from '../../hooks/useDisplayError';
 
 //Change these to use Chakra components since you started doing this with css 
 
 export const NewUser = () => {
+    const showMessage = useDisplayError();
+    //Use states
+    const [loading, setLoading] = useState(false); // State to track loading status
     const [inputs, setInputs] = useState({
-        email:'',
-        password:'',
-        username:''
-    });
-    const {loading, error, signup} = useNewUserWithEmailAndPassword()
+      email:'',
+      password:'',
+      username:''
+  });
+
+    //Function to create new user
+    const tryCreateNewUser = async () => {
+      setLoading(true);
+      //If some of the inputs are empty we just return
+      if(!inputs.email || !inputs.password || !inputs.username){
+        showMessage("Empty?","Fill in all the fields","error")
+        setLoading(false);
+        return
+      }
+      try {
+        // Check if the username already exists in Firestore
+        const usernameQueryExist = await getDocs(query(collection(firestore, 'users'), where('username', '==', inputs.username)));
+        if (!usernameQueryExist.empty) {
+            throw new Error('Username already exists');
+        }
+        const userCredential = await createUserWithEmailAndPassword(auth, inputs.email, inputs.password);
+        const userDocument = {
+            userID: userCredential.user.uid,
+            email: inputs.email,
+            username: inputs.username,
+            bio: "",
+            profilePicture: "",
+            followers: [],
+            following: [],
+            posts: [],
+            profileCreated: Date.now()
+        };
+        await setDoc(doc(firestore, "users", userCredential.user.uid), userDocument);
+        localStorage.setItem("userProfile", JSON.stringify(userDocument));
+        setLoading(false);
+        showMessage("Welcome", "User created successfully", "success");
+    } catch (e) {
+        setLoading(false);
+        showMessage("Whopsie", e.message, "error");
+    }
+};
 
   return (
     <div className='userInputs'>
@@ -41,7 +85,7 @@ export const NewUser = () => {
         />
         </div> 
 
-        <Button mx={20} mb={5} gap={3} rounded="full"  colorScheme="blue" onClick={() => signup(inputs)} isLoading={loading}>
+        <Button mx={20} mb={5} gap={3} rounded="full"  colorScheme="blue" onClick={tryCreateNewUser} isLoading={loading}>
           <img src={create_user_icon} width={20} alt=''/> 
           Create new user
         </Button>

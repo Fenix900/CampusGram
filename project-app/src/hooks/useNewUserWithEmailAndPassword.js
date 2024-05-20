@@ -1,4 +1,5 @@
-import { auth, firestore } from '../Firebase/firebase';
+//This file is no longer in use
+/*import { auth, firestore } from '../Firebase/firebase';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { useDisplayError } from './useDisplayError';
@@ -62,4 +63,4 @@ const useNewUserWithEmailAndPassword = () => {
 
   return {loading, error, signup}
 }
-export default useNewUserWithEmailAndPassword
+export default useNewUserWithEmailAndPassword*/
