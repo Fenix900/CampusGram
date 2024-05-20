@@ -7,9 +7,12 @@ import Home from './Components/Home/Home';
 import PageLayout from './Components/Sidebar/PageLayout';
 import { Profile } from './Components/Profilepage/Profile';
 import useAuthStore from '../src/globalStates/authStore';
+import { auth } from '../src/Firebase/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-function App() {
-  const validUser = useAuthStore(state => state.user);
+
+function App() { 
+  const [validUser , loading, error] = useAuthState(auth);
   return ( 
     <PageLayout >
       <Routes>
