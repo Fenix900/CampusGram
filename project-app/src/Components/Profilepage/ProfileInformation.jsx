@@ -1,8 +1,14 @@
 import { Avatar, Button, Flex, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import ProfileImg from "../Assets/TestProfile.png"
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../Firebase/firebase';
+
 
 export const ProfileInformation = () => {
+    const [userSignedIn] = useAuthState(auth);
+    const showEditButton = !userSignedIn;
+
   return (
     //This is the header for the profile page, here we will see the profile image,
     //a description and following/followers/posts
@@ -13,9 +19,10 @@ export const ProfileInformation = () => {
                 <Flex direction={{base:"column", sm:"row"}} justifyContent={{base:"center", sm:"flex-start"}} w={"full"}>
                     <Text fontSize={{base:"xl", md:"2xl"}} fontWeight={"700"}>The Username</Text>
                      <Flex justifyContent={{md:"center", base:"left"}} alignItems={"center"} ml={{sm:10, base:0}}>
+                        {!showEditButton ? (
                         <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}}>
                             Edit Profile
-                        </Button>
+                        </Button>): null}
                      </Flex>
                 </Flex>
                 <Flex alignItems={"center"} gap={10}>
