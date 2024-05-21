@@ -23,7 +23,7 @@ export const Login = () => {
     const [loading, setLoading] = useState(false); // State to track loading status
     const [inputs, setInputs] = useState({
         password:'',
-        username:''
+        email:''
     });
     //Function when trying to sign in
     const setLoginUserInfo = useAuthState((state)=>state.login);
