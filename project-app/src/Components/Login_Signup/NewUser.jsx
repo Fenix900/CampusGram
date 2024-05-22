@@ -52,6 +52,7 @@ export const NewUser = () => {
             email: inputs.email,
             username: inputs.username,
             bio: "",
+            profileDisplayName:"",
             profilePicture: "",
             followers: [],
             following: [],
