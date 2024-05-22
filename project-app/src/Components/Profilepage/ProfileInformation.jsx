@@ -23,18 +23,18 @@ export const ProfileInformation = () => {
                      </Flex>
                 </Flex>
                 <Flex alignItems={"center"} gap={10}>
-                    <Text fontSize={"sm"} textAlign="center" >
+                    <VStack>
                         <Text fontSize={"lg"} fontWeight={"800"}>10</Text>
-                        Posts
-                    </Text>
-                    <Text fontSize={"sm"} textAlign="center">
+                        <Text fontSize={"sm"} textAlign="center">Posts</Text>
+                    </VStack>
+                    <VStack>
                         <Text fontSize={"lg"} fontWeight={"800"}>10</Text>
-                        Followers
-                    </Text>
-                    <Text fontSize={"sm"} textAlign="center">
+                        <Text fontSize={"sm"} textAlign="center">Followers</Text>
+                    </VStack>
+                    <VStack>
                         <Text fontSize={"lg"} fontWeight={"800"}>10</Text>
-                        Following
-                    </Text>
+                        <Text fontSize={"sm"} textAlign="center">Following</Text>
+                    </VStack>
                 </Flex>
                 <Text fontWeight={"700"} textDecor={"underline"} fontSize={"md"}>Fenix900 (what the user wants?)</Text>
                 <Text fontSize={"sm"} mt={{base:0, md:-2}}>The discription for what I am doing and what my lift is!!!</Text>
