@@ -3,10 +3,13 @@ import React from 'react'
 import { ProfileAllPosts } from './ProfileAllPosts'
 import { ProfileInformation } from './ProfileInformation'
 import { ProfileSections } from './ProfileSections'
+import useGetProfileByName from '../../hooks/useGetProfileByName'
 
 export const Profile = () => {
+  const user = useGetProfileByName("Filip")
   return (
     <div>
+        {console.log(user.userProfileInfo)/*Can we fetch the user information? */}
         <Container maxW={"container.lg"}>
             <Flex px={5} pt={10} w={"full"} mx={"auto"} flexDirection={"column"} pb={{base:2, md:5}}>
                 <ProfileInformation/>
