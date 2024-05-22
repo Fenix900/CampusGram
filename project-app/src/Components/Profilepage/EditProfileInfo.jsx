@@ -3,9 +3,11 @@ import { Avatar, AvatarBadge, Box, Button, Flex, FormControl, FormLabel, Image, 
 import React, { useState } from 'react'
 import useAuthStore from '../../globalStates/authStore';
 import { useDisplayError } from '../../hooks/useDisplayError';
+import useSaveUpdatesToProfile from '../../hooks/useSaveUpdatesToProfile';
 
 const EditProfileInfo = ({isOpen, onClose}) => { //Change this so it is custom, with custome fields and so on
     const [profilePicture, setProfilePicture] = useState(null);  //Hook for when we change the profile picture
+    const {isUpdating, updateProfileInfo} = useSaveUpdatesToProfile();  //Info when updating profile like when it loads and the function to update info.
     const userInfo = useAuthStore((state) => state.user);     //Gets the user information
     const showMessage = useDisplayError();
     const [inputs, setInputs] = useState({
@@ -29,8 +31,9 @@ const EditProfileInfo = ({isOpen, onClose}) => { //Change this so it is custom, 
       }
     };
     //This function should update the information
-    const saveAndUpdateProfile = () =>{
-        showMessage("Saved image","We saved your image","success")
+    const saveAndUpdateProfile = async () =>{
+        console.log("Is is loading? ", isUpdating)
+        updateProfileInfo(inputs, profilePicture) //Doesn't work now since we dont have a database for the profilePics
     }
     
 
@@ -71,7 +74,7 @@ const EditProfileInfo = ({isOpen, onClose}) => { //Change this so it is custom, 
                             {profilePicture && (
                                 <Box mt={2} maxW="200px" maxH="200px" overflow="hidden"> {/*Fix this so the image is different display sizes for phone/PC AND make the user be able to remove profilePIC*/}
                                 <Image
-                                    src={profilePicture}
+                                    src={profilePicture || userInfo.profilePicture}
                                     alt="Profile Preview"
                                     w="100%"
                                     h="100%"
