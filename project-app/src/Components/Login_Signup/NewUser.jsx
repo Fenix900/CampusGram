@@ -42,7 +42,8 @@ export const NewUser = () => {
       }
       try {
         // Check if the username already exists in Firestore
-        const usernameQueryExist = await getDocs(query(collection(firestore, 'users'), where('username', '==', inputs.username)));
+        const usernameInLower = inputs.username.toLowerCase(); //We have username in lower to check that big and small letters dont matter
+        const usernameQueryExist = await getDocs(query(collection(firestore, 'users'), where('usernameLower', '==', usernameInLower)));
         if (!usernameQueryExist.empty) {
             throw new Error('Username already exists');
         }
@@ -51,6 +52,7 @@ export const NewUser = () => {
             userID: userCredential.user.uid,
             email: inputs.email,
             username: inputs.username,
+            usernameLower: usernameInLower, // Store the normalized username
             bio: "",
             profileDisplayName:"",
             profilePicture: "",
