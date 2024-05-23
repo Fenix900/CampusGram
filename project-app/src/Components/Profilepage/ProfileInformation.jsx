@@ -5,11 +5,13 @@ import EditProfileInfo from './EditProfileInfo'
 import useGetProfileByName from '../../hooks/useGetProfileByName'
 import useProfileInfoStore from '../../globalStates/profileInfoStore'
 import placeholder from '../Assets/NoImage.png'
+import useAuthStore from '../../globalStates/authStore'
 
 export const ProfileInformation = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {userProfileInfo} = useProfileInfoStore() //Gets the information about the user (from profileInfoStore.js)
-
+    const loggedInUser = useAuthStore(state => state.user); //Get the logged in user (to know if we are on our profile or someone else)
+    const myProfile = loggedInUser && userProfileInfo.username == loggedInUser.username; //Are we visiting our own page and check if we are authenticated
   return (
     //This is the header for the profile page, here we will see the profile image,
     //a description and following/followers/posts
@@ -20,10 +22,16 @@ export const ProfileInformation = () => {
             <VStack gap={{base:2, md:5}} alignItems={"start"}>
                 <Flex direction={{base:"column", sm:"row"}} justifyContent={{base:"center", sm:"flex-start"}} w={"full"}>
                     <Text fontSize={{base:"xl", md:"2xl"}} fontWeight={"700"}>{userProfileInfo.username}</Text>
-                     <Flex justifyContent={{md:"center", base:"left"}} alignItems={"center"} ml={{sm:10, base:0}}>
-                        <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={onOpen}>
-                            Edit Profile
-                        </Button>
+                    <Flex justifyContent={{md:"center", base:"left"}} alignItems={"center"} ml={{sm:10, base:0}}>
+                        {myProfile?
+                            <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={onOpen}>
+                                Edit Profile
+                            </Button>
+                            :
+                            <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={null}>
+                                Follow
+                            </Button>
+                        }
                      </Flex>
                 </Flex>
                 <Flex alignItems={"center"} gap={10}>
