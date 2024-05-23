@@ -4,7 +4,8 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { firestore } from '../Firebase/firebase';
 import useProfileInfoStore from '../globalStates/profileInfoStore'
 
-const useGetProfileByName = (username) => {
+//This function gets the profile of a user by their username
+const useGetProfileByName = (usernameLower) => {
     const [isLoading, setIsLoading] = useState(true); 
     const showMessage = useDisplayError();
     //Global hook to store users profile information
@@ -14,8 +15,8 @@ const useGetProfileByName = (username) => {
         setIsLoading(true);
         const getUserProfile = async () =>{
             try {
-                //query for user and find the document for that user
-                const q = query(collection(firestore,"users"),where("username", "==", username))
+                //query for user and find the document for that user (we search by lowecase names)
+                const q = query(collection(firestore,"users"),where("usernameLower", "==", usernameLower))
                 const documentSnapshot = await getDocs(q)
 
                 //User isn't found, (cant fetch data about them)
@@ -37,7 +38,7 @@ const useGetProfileByName = (username) => {
             }
         }
         getUserProfile()
-    },[setUserProfileInfo, username])
+    },[setUserProfileInfo, usernameLower])
     return{isLoading,userProfileInfo}
 }
 
