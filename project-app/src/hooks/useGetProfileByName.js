@@ -21,8 +21,8 @@ const useGetProfileByName = (usernameLower) => {
 
                 //User isn't found, (cant fetch data about them)
                 if(documentSnapshot.empty){
+                    setIsLoading(false); 
                     setUserProfileInfo(null);
-                    showMessage("Not Found","The user you are looking for does not exist","error");
                     return
                 }
                 let userDoc; //Variable to save user document information in

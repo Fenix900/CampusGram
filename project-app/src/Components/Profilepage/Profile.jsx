@@ -5,17 +5,18 @@ import { ProfileInformation } from './ProfileInformation'
 import { ProfileSections } from './ProfileSections'
 import useGetProfileByName from '../../hooks/useGetProfileByName'
 import { useParams } from 'react-router-dom'
+import { CouldNotFindUser } from './CouldNotFindUser'
 
 export const Profile = () => {
   const { username } = useParams(); //Since we use "username" as a parameter in the url we can extract it
-  const usernameLower = username.toLowerCase();
+  const usernameLower = username.toLowerCase(); //make it to lower for safer query searching
   const {isLoading,userProfileInfo} = useGetProfileByName(usernameLower)
-  console.log("username_",usernameLower)
-  console.log("profile",userProfileInfo)
-  if( !userProfileInfo){
+  console.log(userProfileInfo)
+  if(!userProfileInfo && !isLoading){ //no user found
     console.log("user not found")
+    return <CouldNotFindUser />
   }
-  
+
   return (
     <div>
         <Container maxW={"container.lg"}>

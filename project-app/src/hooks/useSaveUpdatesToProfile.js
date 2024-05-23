@@ -6,7 +6,7 @@ import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
 
 const useSaveUpdatesToProfile = () => {
-    const [isUpdating, setIsUspdating] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
     //Gets the user info locally
     const userInfo = useAuthStore((state) => state.user);
     const showMessage = useDisplayError();
@@ -20,7 +20,7 @@ const useSaveUpdatesToProfile = () => {
             return
         }
         //Start uploading
-        setIsUspdating(true);
+        setIsUpdating(true);
         //reference to database for profilepics (storage)
         const storageRef = ref(storage, `usersProfilePics/${userInfo.uid}`);
         //document to update the user info
@@ -49,10 +49,12 @@ const useSaveUpdatesToProfile = () => {
             console.log("The user information", userInfo) //We will have to add this update to the profile later
             //--------------
             showMessage("Updated","Profile updated successfully","success")
-            setIsUspdating(false)
+            setIsUpdating(false)
         } catch (error) {
             showMessage("Something went wrong",error,"error")
-            setIsUspdating(false)
+            setIsUpdating(false)
+        }finally {
+            setIsUpdating(false); // Ensure this runs in both success and error cases
         }
     }
     return{isUpdating, updateProfileInfo}
