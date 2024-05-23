@@ -19,7 +19,7 @@ export const Profile = () => {
         <Container maxW={"container.lg"}>
             <Flex px={5} pt={10} w={"full"} mx={"auto"} flexDirection={"column"} pb={{base:2, md:5}}>
                 {!isLoading && userProfileInfo ? <ProfileInformation/> 
-                : <Spinner size={"xl"}/> /*When the user is being loaded we show a spinner */} 
+                : <Spinner size={"xl"} alignSelf={"center"}/> /*When the user is being loaded we show a spinner */} 
             </Flex>
             <Flex px={{base:2, md:4}} maxW={"full"} mx={"auto"} direction={"column"}>
                 <ProfileSections />
