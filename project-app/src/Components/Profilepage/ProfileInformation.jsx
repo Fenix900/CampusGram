@@ -1,18 +1,28 @@
 import { Avatar, Button, Flex, Text, VStack, useDisclosure } from '@chakra-ui/react'
-import React from 'react'
-import ProfileImg from "../Assets/TestProfile.png"
+import React, { useEffect } from 'react'
 import EditProfileInfo from './EditProfileInfo'
-import useGetProfileByName from '../../hooks/useGetProfileByName'
 import useProfileInfoStore from '../../globalStates/profileInfoStore'
 import placeholder from '../Assets/NoImage.png'
 import useAuthStore from '../../globalStates/authStore'
+import { useNavigate, useParams } from 'react-router-dom';
+
 
 export const ProfileInformation = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {userProfileInfo} = useProfileInfoStore() //Gets the information about the user (from profileInfoStore.js)
     const loggedInUser = useAuthStore(state => state.user); //Get the logged in user (to know if we are on our profile or someone else)
-    const myProfile = loggedInUser && userProfileInfo.username == loggedInUser.username; //Are we visiting our own page and check if we are authenticated
-  return (
+    const myProfile = loggedInUser && userProfileInfo.username === loggedInUser.username; //Are we visiting our own page and check if we are authenticated
+    
+    // Effect to handle navigation on username change
+    const { usernameFromURL } = useParams(); //Get the current position from URL
+    const navigate = useNavigate(); 
+    useEffect(() => {
+        if (userProfileInfo.username !== usernameFromURL) {//We check that when userProfileInfo.username is changed from the url name
+            navigate('/'+userProfileInfo.username);             //If it has changed then it means that we have changed the username 
+        }
+    }, [userProfileInfo.username, navigate, usernameFromURL]); //The check is dependent of userProfileInfo.username, does it change then we run this code above
+    
+    return (
     //This is the header for the profile page, here we will see the profile image,
     //a description and following/followers/posts
     <div>

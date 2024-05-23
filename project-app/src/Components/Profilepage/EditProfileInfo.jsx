@@ -1,6 +1,6 @@
 
-import { Avatar, AvatarBadge, Box, Button, Flex, FormControl, FormLabel, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Textarea, VStack } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import { Box, Button, Flex, FormControl, FormLabel, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, VStack } from '@chakra-ui/react'
+import { useState } from 'react'
 import useAuthStore from '../../globalStates/authStore';
 import { useDisplayError } from '../../hooks/useDisplayError';
 import useSaveUpdatesToProfile from '../../hooks/useSaveUpdatesToProfile';
@@ -32,11 +32,15 @@ const EditProfileInfo = ({isOpen, onClose}) => { //Change this so it is custom, 
     };
     //This function should update the information
     const saveAndUpdateProfile = async () =>{
-        console.log("Is is loading? ", isUpdating)
-        updateProfileInfo(inputs, profilePicture) //Doesn't work now since we dont have a database for the profilePics
+      try {
+        await updateProfileInfo(inputs, profilePicture) //Updates the information about the user with inputs and the profilePic
+        setProfilePicture(null) //Clear the profilePic that was uploaded
+      } catch (e) {
+        showMessage("Error",e,"error")
+      }
+      onClose(); //Close the pop-up
     }
     
-
   return (
     <div>
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -90,10 +94,10 @@ const EditProfileInfo = ({isOpen, onClose}) => { //Change this so it is custom, 
           </ModalBody>
 
           <ModalFooter justifyContent={"space-around"}>
-            <Button colorScheme='red' onClick={onClose}>
+            <Button colorScheme='red' onClick={onClose} isLoading={isUpdating}>
               Close
             </Button>
-            <Button colorScheme='blue' onClick={saveAndUpdateProfile}>
+            <Button colorScheme='blue' onClick={saveAndUpdateProfile} isLoading={isUpdating}>
               Save
             </Button>
           </ModalFooter>
