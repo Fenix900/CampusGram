@@ -7,13 +7,15 @@ import {useSignOut} from "react-firebase-hooks/auth"
 import { auth } from '../../Firebase/firebase';
 import { useDisplayError } from '../../hooks/useDisplayError';
 import useAuthStore from "../../globalStates/authStore"
+import useProfileInfoStore from '../../globalStates/profileInfoStore'
 
 
 //This is the side bar that is being imported to the layout
 const Sidebar = () => {
     const [signOut, loadilng_logout] = useSignOut(auth);
     const showMessage = useDisplayError();
-    const UserLogOut = useAuthStore((state) => state.logout)
+    const UserLogOut = useAuthStore((state) => state.logout) //To sign out user (Remove user from local storage)
+    const userInfo = useAuthStore((state) => state.user);    //Get user info (Fetch user information locally)
     //This function handles logouts
     const logOutUser = async () => {
         try {
@@ -43,9 +45,9 @@ const Sidebar = () => {
             link: "/home",
         },
         {
-            icon: <Avatar size={{ base: "sm", md: "md" }} name='Filip' src='https://bit.ly/broken-link' />,
+            icon: <Avatar size={{ base: "sm", md: "md" }} name={userInfo.username} src={userInfo.profilePicture} />,
             text: "Profile",
-            link: "/home",
+            link: "/"+userInfo.username, //Navigate to user profile with help of "userInfo.username" as path
         },
     ];
     return (
