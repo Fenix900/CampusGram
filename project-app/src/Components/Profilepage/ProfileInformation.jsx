@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, Flex, Text, VStack, useDisclosure } from '@chakra-ui/react'
 import React from 'react'
 import ProfileImg from "../Assets/TestProfile.png"
+import useFollowAndUnfollowUser from '../../hooks/useFollowAndUnfollowUser'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../Firebase/firebase';
 import { useLocation, useParams } from 'react-router-dom';
@@ -22,6 +23,9 @@ export const ProfileInformation = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {userProfileInfo} = useProfileInfoStore() //Gets the information about the user (from profileInfoStore.js)
     const isMyProfile = loggedInUser && userProfileInfo.username === loggedInUser.username; //Are we visiting our own page and check if we are authenticated
+
+    //ADDED WHEN MERGING:
+    const {isFollowing, handleFollowOrUnfollowUserf} = useFollowAndUnfollowUser("MwnTpfllRwNmHzoF7QeC5vTdZ4e2");
     
     // Effect to handle navigation on username change
     const { usernameFromURL } = useParams(); //Get the current position from URL
@@ -43,6 +47,16 @@ export const ProfileInformation = () => {
                 <Flex direction={{base:"column", sm:"row"}} justifyContent={{base:"center", sm:"flex-start"}} w={"full"}>
                     <Text fontSize={{base:"xl", md:"2xl"}} fontWeight={"700"}>{userProfileInfo.username}</Text>
                      <Flex justifyContent={{md:"center", base:"left"}} alignItems={"center"} ml={{sm:10, base:0}}>
+//THIS IS CODE FROM COMPONENT THAT HANDLES FOLLOWING: NEEDS TO BE IMPLEMENTED INTO THE REST
+{
+    //**
+                            <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={handleFollowOrUnfollowUserf}>
+                            Follow
+                        </Button>
+                        <Button bg={isFollowing ? "green" : "red"}></Button>
+     */
+}
+
                         {showEditButton ? 
                         <Box>
                             {isMyProfile ?
