@@ -7,12 +7,11 @@ import { auth } from '../../Firebase/firebase';
 import SignupNavBar from '../TopNavBar/SignupNavBar';
 
 const PageLayout = ({children}) => {
-     const locationPath = useLocation();
-     console.log(locationPath);
+    const location = useLocation();
      const [user, loading, error] = useAuthState(auth);
      //This showsSidebar shows the sidabar if the location isn't the login page and if there is a signed in user
-     const navSigninOrSignup = locationPath.pathname !=="/" && !user;
-     const showSidebar = locationPath.pathname !== "/" && user;
+     const navSigninOrSignup = location.pathname !=="/" && !user;
+     const showSidebar = location.pathname !== "/" && user;
 
 
   return (

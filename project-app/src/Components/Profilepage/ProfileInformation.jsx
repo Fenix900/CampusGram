@@ -3,11 +3,15 @@ import React from 'react'
 import ProfileImg from "../Assets/TestProfile.png"
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../Firebase/firebase';
+import { useLocation, useParams } from 'react-router-dom';
+import useAuthStore from '../../globalStates/authStore';
 
 
 export const ProfileInformation = () => {
-    const [userSignedIn] = useAuthState(auth);
-    const showEditButton = !userSignedIn;
+    const userSignedIn = useAuthState(auth);
+    const userInfo = useAuthStore()
+    const usernameFromParam = useParams()
+    const showEditButton = userInfo.user.username.toLowerCase()===usernameFromParam.username; //EDIT THIS SO THAT WE DONT HAVE TO CHECK WITH .toLowerCase()
 
   return (
     //This is the header for the profile page, here we will see the profile image,
@@ -19,7 +23,7 @@ export const ProfileInformation = () => {
                 <Flex direction={{base:"column", sm:"row"}} justifyContent={{base:"center", sm:"flex-start"}} w={"full"}>
                     <Text fontSize={{base:"xl", md:"2xl"}} fontWeight={"700"}>The Username</Text>
                      <Flex justifyContent={{md:"center", base:"left"}} alignItems={"center"} ml={{sm:10, base:0}}>
-                        {!showEditButton ? (
+                        {showEditButton ? (
                         <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}}>
                             Edit Profile
                         </Button>): null}
