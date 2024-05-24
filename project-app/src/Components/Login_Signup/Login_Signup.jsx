@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const Login_Signup = () => {
  /*Maybe add forget password here*/
-  const [action, setAction] = useState("Login");
+  const [action, setAction] = useState("New user");
 
   return (
     /*This part is the whole sign in page*/
