@@ -1,23 +1,25 @@
-import { Box, Button, Flex, VStack } from '@chakra-ui/react'
+import { Box, Button, Flex, Spinner, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../Firebase/firebase';
 import SignupNavBar from '../TopNavBar/SignupNavBar';
+import useAuthStore from '../../globalStates/authStore';
 
 const PageLayout = ({children}) => {
     const location = useLocation();
-     const [user, loading, error] = useAuthState(auth);
+     //const [user, loading, error] = useAuthState(auth);
+     const userInfo = useAuthStore((state) => state.user);  
      //This showsSidebar shows the sidabar if the location isn't the login page and if there is a signed in user
-     const navSigninOrSignup = location.pathname !=="/" && !user;
-     const showSidebar = location.pathname !== "/" && user;
+     const navSigninOrSignup =  !userInfo && location.pathname !=="/";
+     const showSidebar = location.pathname !== "/" && userInfo;
 
 
   return (
     <VStack>
         {navSigninOrSignup ? <SignupNavBar /> : null}
-        <Flex>
+        <Flex w={"full"}>
             {/*This side is for the side bar (LEFT) */}
             {showSidebar ? (        
             <Box w={{base:"75px", md:"230px"}}> 

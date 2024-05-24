@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Text, VStack, useDisclosure } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, Text, VStack, useDisclosure } from '@chakra-ui/react'
 import React from 'react'
 import ProfileImg from "../Assets/TestProfile.png"
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -8,20 +8,20 @@ import useAuthStore from '../../globalStates/authStore';
 import { useEffect } from 'react'
 import EditProfileInfo from './EditProfileInfo'
 import useProfileInfoStore from '../../globalStates/profileInfoStore'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import placeholder from '../Assets/NoImage.png'
 
 
 export const ProfileInformation = () => {
     const userSignedIn = useAuthState(auth);
-    const userInfo = useAuthStore()
+    const loggedInUser = useAuthStore(state => state.user); //Get the logged in user (to know if we are on our profile or someone else) or if we are not logged in
+    console.log(loggedInUser)
     const usernameFromParam = useParams()
-    const showEditButton = userInfo.user.username.toLowerCase()===usernameFromParam.username; //EDIT THIS SO THAT WE DONT HAVE TO CHECK WITH .toLowerCase()
+    const showEditButton = userSignedIn && loggedInUser.username.toLowerCase()===usernameFromParam.username; //EDIT THIS SO THAT WE DONT HAVE TO CHECK WITH .toLowerCase()
 
-export const ProfileInformation = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {userProfileInfo} = useProfileInfoStore() //Gets the information about the user (from profileInfoStore.js)
-    const loggedInUser = useAuthStore(state => state.user); //Get the logged in user (to know if we are on our profile or someone else)
-    const myProfile = loggedInUser && userProfileInfo.username === loggedInUser.username; //Are we visiting our own page and check if we are authenticated
+    const isMyProfile = loggedInUser && userProfileInfo.username === loggedInUser.username; //Are we visiting our own page and check if we are authenticated
     
     // Effect to handle navigation on username change
     const { usernameFromURL } = useParams(); //Get the current position from URL
@@ -41,22 +41,20 @@ export const ProfileInformation = () => {
             <Avatar size={{base:"xl", md:"2xl"}} name={userProfileInfo.username} src={userProfileInfo.profilePicture  ? userProfileInfo.profilePicture : placeholder} justifySelf={"flex-start"} alignSelf={"flex-start"} mx={{base:2, md:10}}/>
             <VStack gap={{base:2, md:5}} alignItems={"start"}>
                 <Flex direction={{base:"column", sm:"row"}} justifyContent={{base:"center", sm:"flex-start"}} w={"full"}>
-<<<<<<< project-app/src/Components/Profilepage/ProfileInformation.jsx
                     <Text fontSize={{base:"xl", md:"2xl"}} fontWeight={"700"}>{userProfileInfo.username}</Text>
                      <Flex justifyContent={{md:"center", base:"left"}} alignItems={"center"} ml={{sm:10, base:0}}>
-                        {showEditButton ? (
-                        <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}}>
-                            Edit Profile
-                        </Button>): null}
-                        {myProfile?
-                            <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={onOpen}>
-                                Edit Profile
-                            </Button>
-                            :
-                            <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={null}>
-                                Follow
-                            </Button>
-                        }
+                        {showEditButton ? 
+                        <Box>
+                            {isMyProfile ?
+                                <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={onOpen}>
+                                    Edit Profile
+                                </Button>
+                                :
+                                <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={null}>
+                                    Follow
+                                </Button>}
+                            </Box>
+                        : null}
                      </Flex>
                 </Flex>
                 <Flex alignItems={"center"} gap={10}>
