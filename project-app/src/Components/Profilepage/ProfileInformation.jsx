@@ -47,16 +47,6 @@ export const ProfileInformation = () => {
                 <Flex direction={{base:"column", sm:"row"}} justifyContent={{base:"center", sm:"flex-start"}} w={"full"}>
                     <Text fontSize={{base:"xl", md:"2xl"}} fontWeight={"700"}>{userProfileInfo.username}</Text>
                      <Flex justifyContent={{md:"center", base:"left"}} alignItems={"center"} ml={{sm:10, base:0}}>
-//THIS IS CODE FROM COMPONENT THAT HANDLES FOLLOWING: NEEDS TO BE IMPLEMENTED INTO THE REST
-{
-    //**
-                            <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={handleFollowOrUnfollowUserf}>
-                            Follow
-                        </Button>
-                        <Button bg={isFollowing ? "green" : "red"}></Button>
-     */
-}
-
                         {showEditButton ? 
                         <Box>
                             {isMyProfile ?
@@ -64,7 +54,7 @@ export const ProfileInformation = () => {
                                     Edit Profile
                                 </Button>
                                 :
-                                <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={null}>
+                                <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={handleFollowOrUnfollowUserf}>
                                     Follow
                                 </Button>}
                             </Box>
