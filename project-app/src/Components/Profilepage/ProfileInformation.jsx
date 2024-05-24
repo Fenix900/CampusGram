@@ -15,9 +15,9 @@ import placeholder from '../Assets/NoImage.png'
 export const ProfileInformation = () => {
     const userSignedIn = useAuthState(auth);
     const loggedInUser = useAuthStore(state => state.user); //Get the logged in user (to know if we are on our profile or someone else) or if we are not logged in
-    console.log(loggedInUser)
     const usernameFromParam = useParams()
-    const showEditButton = userSignedIn && loggedInUser.username.toLowerCase()===usernameFromParam.username; //EDIT THIS SO THAT WE DONT HAVE TO CHECK WITH .toLowerCase()
+    const showEditButton = userSignedIn && loggedInUser.usernameLower===usernameFromParam.username;
+    //console.log("loggedInUser.usernameLower", loggedInUser.usernameLower, "usernameFromParam.username. ",usernameFromParam.username)
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {userProfileInfo} = useProfileInfoStore() //Gets the information about the user (from profileInfoStore.js)
@@ -28,7 +28,7 @@ export const ProfileInformation = () => {
     const navigate = useNavigate(); 
     useEffect(() => {
         if (userProfileInfo.username !== usernameFromURL) {//We check that when userProfileInfo.username is changed from the url name
-            navigate('/'+userProfileInfo.username);             //If it has changed then it means that we have changed the username 
+            navigate('/'+userProfileInfo.usernameLower);             //If it has changed then it means that we have changed the username 
         }
     }, [userProfileInfo.username, navigate, usernameFromURL]); //The check is dependent of userProfileInfo.username, does it change then we run this code above
     
