@@ -17,15 +17,13 @@ export const ProfileInformation = () => {
     const userSignedIn = useAuthState(auth);
     const loggedInUser = useAuthStore(state => state.user); //Get the logged in user (to know if we are on our profile or someone else) or if we are not logged in
     const usernameFromParam = useParams()
-    const showEditButton = userSignedIn && loggedInUser.usernameLower===usernameFromParam.username;
+    //const showFollowEditButton = userSignedIn && loggedInUser.usernameLower===usernameFromParam.usernameLower;
     //console.log("loggedInUser.usernameLower", loggedInUser.usernameLower, "usernameFromParam.username. ",usernameFromParam.username)
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {userProfileInfo} = useProfileInfoStore() //Gets the information about the user (from profileInfoStore.js)
-    const isMyProfile = loggedInUser && userProfileInfo.username === loggedInUser.username; //Are we visiting our own page and check if we are authenticated
-
-    //ADDED WHEN MERGING:
-    const {isFollowing, handleFollowOrUnfollowUserf} = useFollowAndUnfollowUser("MwnTpfllRwNmHzoF7QeC5vTdZ4e2");
+    const isMyProfile = loggedInUser && userProfileInfo.usernameLower === loggedInUser.usernameLower; //Are we visiting our own page and check if we are authenticated
+    const {isFollowing, handleFollowOrUnfollowUserf} = useFollowAndUnfollowUser(userProfileInfo.userID); //IF IT IS NULL??_-------------------------------------------------------------------------------
     
     // Effect to handle navigation on username change
     const { usernameFromURL } = useParams(); //Get the current position from URL
@@ -47,7 +45,7 @@ export const ProfileInformation = () => {
                 <Flex direction={{base:"column", sm:"row"}} justifyContent={{base:"center", sm:"flex-start"}} w={"full"}>
                     <Text fontSize={{base:"xl", md:"2xl"}} fontWeight={"700"}>{userProfileInfo.username}</Text>
                      <Flex justifyContent={{md:"center", base:"left"}} alignItems={"center"} ml={{sm:10, base:0}}>
-                        {showEditButton ? 
+                        {loggedInUser ? 
                         <Box>
                             {isMyProfile ?
                                 <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={onOpen}>
@@ -55,7 +53,7 @@ export const ProfileInformation = () => {
                                 </Button>
                                 :
                                 <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={handleFollowOrUnfollowUserf}>
-                                    Follow
+                                    {isFollowing ? "Unfollow" : "Follow"}
                                 </Button>}
                             </Box>
                         : null}
