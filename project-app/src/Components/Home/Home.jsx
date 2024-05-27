@@ -1,6 +1,7 @@
 import { Box, Container, Flex, Spinner, Text } from '@chakra-ui/react'
 import React from 'react'
 import { FeedPosts } from '../Posts_Feed/FeedPosts'
+import { Suggestions } from '../suggestionForUsers/Suggestions'
 import useAuthUser from '../../globalStates/authStore'
 
 //The home page, the side bar should be here, the feed and also a suggestion, but is only shown during bigger screens
@@ -16,12 +17,12 @@ export default function Home() {
           </Box>
           <Box 
           flex={3} 
-          mr={20}
+          mr={5}
           display={{base:"none", lg:"block"}}
           maxW={"300px"}
-          border={"1px solid red"}
+          borderLeft={"1px solid grey"}
           >
-            suggested users here
+            <Suggestions></Suggestions>
           </Box>
         </Flex>
       </Container>

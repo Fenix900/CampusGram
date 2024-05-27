@@ -6,6 +6,7 @@ import { useDisplayError } from './useDisplayError'
 import useProfileInfoStore from '../globalStates/profileInfoStore'
 
 const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to follow/unfollow
+    const [isLoading, setIsLoading] = useState(false)
     const [isFollowing, setIsFollowing]  = useState(false)
     const signedInUser = useAuthStore((state) => state.user)
     const setSignedInUser = useAuthStore((state) => state.setUser)
@@ -18,7 +19,8 @@ const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to f
         }
     },[userID, signedInUser])
 
-    const handleFollowOrUnfollowUserf = async () => {
+    const handleFollowOrUnfollowUser = async () => {
+        setIsLoading(true)
         if(signedInUser.userID === userID){
             console.log("This should not be possible, follow yourself so to say. Just a extra safety step i guess")
             return
@@ -65,11 +67,13 @@ const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to f
                 })
                 setIsFollowing(true)
             }
+            setIsLoading(false)
         } catch (error) {
             showMessage("Error",error,"error")
+            setIsLoading(false)
         }
     }
-    return {isFollowing,handleFollowOrUnfollowUserf}
+    return {isFollowing,handleFollowOrUnfollowUser,isLoading}
 }
 
 export default useFollowAndUnfollowUser
