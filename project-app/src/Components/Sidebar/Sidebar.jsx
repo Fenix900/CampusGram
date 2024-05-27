@@ -1,11 +1,34 @@
-import { Avatar, Box, Flex, Image, Link, Text, Tooltip } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Image, Link, Spinner, Text, Toast, Tooltip } from '@chakra-ui/react'
 import React from 'react'
-import {Link as ReactRouterLink} from 'react-router-dom'
+import {Link as ReactRouterLink, useNavigate} from 'react-router-dom'
 import TestICON from "../Assets/Email.png"
-import signOut from "../Assets/logout.png"
+import signOut_icon from "../Assets/logout.png"
+import {useSignOut} from "react-firebase-hooks/auth"
+import { auth } from '../../Firebase/firebase';
+import { useDisplayError } from '../../hooks/useDisplayError';
+import useAuthStore from "../../globalStates/authStore"
+import useProfileInfoStore from '../../globalStates/profileInfoStore'
 
 //This is the side bar that is being imported to the layout
 const Sidebar = () => {
+    const [signOut, loadilng_logout] = useSignOut(auth);
+    const showMessage = useDisplayError();
+    const UserLogOut = useAuthStore((state) => state.logout) //To sign out user (Remove user from local storage)
+    const userInfo = useAuthStore((state) => state.user);    //Get user info (Fetch user information locally)
+    const navigate = useNavigate()
+    //This function handles logouts
+    const logOutUser = async () => {
+        try {
+            navigate('/home')
+            await signOut();
+            localStorage.removeItem('userProfile') 
+            showMessage("Logged out","Bye","warning")
+            UserLogOut();
+            navigate('/')
+        } catch (error) {
+            showMessage("Error",error.message,"error")
+        }
+    }
     //These are the sidebar icons and what they are
     const sidebarItems = [
         {
@@ -24,9 +47,9 @@ const Sidebar = () => {
             link: "/home",
         },
         {
-            icon: <Avatar size={{ base: "sm", md: "md" }} name='Filip' src='https://bit.ly/broken-link' />,
+            icon: <Avatar size={{ base: "sm", md: "md" }} name={userInfo.username} src={userInfo.profilePicture} />,
             text: "Profile",
-            link: "/home",
+            link: "/"+userInfo.usernameLower, //Navigate to user profile with help of "userInfo.usernameLower" as path
         },
     ];
     return (
@@ -78,10 +101,8 @@ const Sidebar = () => {
                 </Flex>
                 {/*signout icon*/}
                 <Tooltip hasArrow  label={"Logout"} placement='right' openDelay={300} ml={2} display={{md:"none", base:"block"}}>
-                    <Link 
-                        display={"flex"}
-                        to={"/"}
-                        as={ReactRouterLink}
+                    <Flex 
+                        onClick={logOutUser}
                         alignItems={"center"}
                         gap={5}
                         _hover={{bg:"gray.700"}}
@@ -91,9 +112,10 @@ const Sidebar = () => {
                         justifyContent={{base:"center", md:"flex-start"}}
                         mt={"auto"}
                         >
-                        <Image src={signOut} boxSize={{base:"40px",md:"60px"}}></Image>
+                        {//Shows a spinner if it is loading
+                        loadilng_logout ? (<Spinner size="xl" />) : (<Image src={signOut_icon} boxSize={{base:"40px",md:"60px"}}></Image>)}
                         <Box display={{base:"none", md:"block"}}>{"Logout"}</Box>
-                    </Link> 
+                    </Flex> 
                 </Tooltip> 
             </Flex>
         </Box>
