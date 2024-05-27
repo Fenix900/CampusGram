@@ -1,9 +1,12 @@
 import { Flex, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { SuggestedUser } from './SuggestedUser'
+import useFetchSuggestedUsers from '../../hooks/useFetchSuggestedUsers'
 
 
 export const Suggestions = () => {
+  const {suggestedUsers, isLoading} = useFetchSuggestedUsers()
+  console.log(suggestedUsers)
   return (
     <div>
         <VStack pt={20} px={4} gap={"50px"} >
