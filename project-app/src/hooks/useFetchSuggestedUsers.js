@@ -6,7 +6,8 @@ import { useDisplayError } from './useDisplayError';
 
 const useFetchSuggestedUsers = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [suggestedUsers, setSuggestedUsers] = useState([]);
+  const [suggestedUsersSmall, setSuggestedUsersSmall] = useState([]);
+  const [suggestedUsersLarge, setSuggestedUsersLarge] = useState([]);
   const signedInUser = useAuthStore(state => state.user);
   const showMessage = useDisplayError();
 
@@ -30,11 +31,12 @@ const useFetchSuggestedUsers = () => {
           user.userID !== signedInUser.userID && !signedInUser.following.includes(user.userID)
         );
 
-        // Take a random set of 5 users from the remaining
+        // Take a random set of 10 users from the remaining
         const shuffledUsers = filteredUsers.sort(() => 0.5 - Math.random());
-        const selectedUsers = shuffledUsers.slice(0, 5);
+        const selectedUsers = shuffledUsers.slice(0, 10); //10 users
 
-        setSuggestedUsers(selectedUsers);
+        setSuggestedUsersLarge(selectedUsers);
+        setSuggestedUsersSmall(selectedUsers.slice(0, 5))
       } catch (error) {
         showMessage("Error",error,"error")
         console.error("Error fetching users: ", error);
@@ -46,7 +48,7 @@ const useFetchSuggestedUsers = () => {
     fetchUsers();
   }, [signedInUser]);
 
-  return { suggestedUsers, isLoading };
+  return { suggestedUsersSmall, suggestedUsersLarge, isLoading };
 };
 
 export default useFetchSuggestedUsers;
