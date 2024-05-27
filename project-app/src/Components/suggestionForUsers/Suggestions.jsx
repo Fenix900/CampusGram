@@ -6,7 +6,6 @@ import useFetchSuggestedUsers from '../../hooks/useFetchSuggestedUsers'
 
 export const Suggestions = () => {
   const {suggestedUsers, isLoading} = useFetchSuggestedUsers()
-  console.log(suggestedUsers)
   if(isLoading){//While loading we show loading icon
     return <Flex justifyContent="center" alignItems="center" w={"full"} pt={"100px"}> {/* Set a fixed height */}
                 <Spinner size={"xl"}/>
@@ -22,11 +21,9 @@ export const Suggestions = () => {
         </Flex>
         {/*The suggested users */}
         {suggestedUsers.map((users) => (
-          <SuggestedUser username={users.username} profilePic={users.profilePicture}/>
+          <SuggestedUser username={users.username} profilePic={users.profilePicture} followers={users.followers.length}/>
         ))}
-
-            <SuggestedUser  username="Elias El Hashish" profilePic=""/>
-
+        {suggestedUsers.length === 0 && <Text textAlign={"center"}>No more suggested users</Text>}
              <Text fontSize={"xs"} fontWeight={"300"}>See more</Text>
         </VStack>
     </div>
