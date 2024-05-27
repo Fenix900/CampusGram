@@ -4,6 +4,7 @@ import {arrayRemove, arrayUnion, doc, updateDoc} from "firebase/firestore"
 import { firestore } from '../Firebase/firebase'
 
 const useFollowAndUnfollowUser = (userID) => {
+    const [isLoading, setIsLoading] = useState(false)
     const [isFollowing, setIsFollowing]  = useState(false)
     const signedInUser = useAuthStore((state) => state.user)
     const setSignedInUser = useAuthStore((state) => state.setUser)
@@ -15,7 +16,8 @@ const useFollowAndUnfollowUser = (userID) => {
         }
     },[userID, signedInUser])
 
-    const handleFollowOrUnfollowUserf = async () => {
+    const handleFollowOrUnfollowUser = async () => {
+        setIsLoading(true)
         if(signedInUser.userID === userID){
             console.log("Cannot follow yourslef")
             return
@@ -45,11 +47,13 @@ const useFollowAndUnfollowUser = (userID) => {
                 }))
                 setIsFollowing(true)
             }
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
         }
     }
-    return {isFollowing,handleFollowOrUnfollowUserf}
+    return {isFollowing,handleFollowOrUnfollowUser,isLoading}
 }
 
 export default useFollowAndUnfollowUser
