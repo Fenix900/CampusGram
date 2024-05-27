@@ -23,7 +23,7 @@ export const ProfileInformation = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {userProfileInfo} = useProfileInfoStore() //Gets the information about the user (from profileInfoStore.js)
     const isMyProfile = loggedInUser && userProfileInfo.usernameLower === loggedInUser.usernameLower; //Are we visiting our own page and check if we are authenticated
-    const {isFollowing, handleFollowOrUnfollowUserf} = useFollowAndUnfollowUser(userProfileInfo.userID); //IF IT IS NULL??_-------------------------------------------------------------------------------
+    const {isFollowing,handleFollowOrUnfollowUser,isLoading} = useFollowAndUnfollowUser(userProfileInfo.userID); //IF IT IS NULL??_-------------------------------------------------------------------------------
     
     // Effect to handle navigation on username change
     const { usernameFromURL } = useParams(); //Get the current position from URL
@@ -52,7 +52,7 @@ export const ProfileInformation = () => {
                                     Edit Profile
                                 </Button>
                                 :
-                                <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={handleFollowOrUnfollowUserf}>
+                                <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={handleFollowOrUnfollowUser}>
                                     {isFollowing ? "Unfollow" : "Follow"}
                                 </Button>}
                             </Box>

@@ -15,7 +15,6 @@ export const Suggestions = () => {
   }
   console.log("suggestedUsersSmall",suggestedUsersSmall,"suggestedUsersLarge",suggestedUsersLarge)
   return (
-    <div>
         <VStack pt={15} px={4} gap={"30px"} >
         {/*header for suggested users*/}
         <Flex  w={"full"} alignItems={"center"} justifyContent={"space-between"}>
@@ -27,8 +26,8 @@ export const Suggestions = () => {
                 </Button>
         </Flex>
         {/*The suggested users */}
-        {suggestedUsers.map((users) => (
-          <SuggestedUser user={users}/>
+        {suggestedUsers.map((user) => (
+          <SuggestedUser key={user.id} user={user} />
         ))}
         {suggestedUsersSmall.length === 0 && <Text textAlign={"center"}>No more suggested users</Text>}
              <Button size="xs" fontWeight={"300"} bg={"transparent"} _hover={{textDecor:"underline"}} 
@@ -36,7 +35,6 @@ export const Suggestions = () => {
              {showLarge ? "Show Less" : "See more"}
              </Button>
         </VStack>
-    </div>
   )
 }
  

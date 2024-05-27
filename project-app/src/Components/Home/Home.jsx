@@ -12,7 +12,7 @@ export default function Home() {
         <Flex gap={20}>
           <Box flex={2} py={100}>
             {/*This doesn't have time to get username since we use await so we have to have a placeholder "Username_null"*/}
-            <Text>Welcome {currentUser ? (currentUser.username) : (<Spinner />)}</Text>
+            <Text>Welcome {currentUser ? (currentUser.username) : <Spinner />}</Text>
             <FeedPosts/>
           </Box>
           <Box 
