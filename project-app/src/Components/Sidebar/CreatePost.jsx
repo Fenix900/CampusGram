@@ -122,6 +122,7 @@ function useCreatePost() { //hook to create a post
   const handleCreatePost = async(picture, descriptionText) =>{
     setIsLoading(true)
     if(!picture){ //If no image is uploaded
+      setIsLoading(false)
       throw new Error('No image selected');
     }
     const newPost = { //This is a post, what it should contain 
