@@ -1,5 +1,5 @@
 import { Avatar, Button, Flex, Spinner, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuthStore from '../../globalStates/authStore'
 import useFollowAndUnfollowUser from '../../hooks/useFollowAndUnfollowUser'
 
@@ -12,12 +12,18 @@ export const SuggestedUser = ({user}) => {
       setIsFollow(isFollowing)
       handleFollowOrUnfollowUser()
     }
+
+    // Update isFollow state based on isFollowing value
+    useEffect(() => {
+      setIsFollow(isFollowing);
+    }, [isFollowing]);
+
     if(isLoading){
       return <Spinner/>
     }
 
   return (
-    <Flex justifyContent={"space-between"} w={"full"} alignItems={"center"} gap={2} >
+    <Flex justifyContent={"space-between"} w={"full"} alignItems={"center"} gap={2}>
         <Flex gap={2} alignItems={"center"} >
             <Avatar src={user.profilePicture} name={user.username} size={"md"}/>
             <Text fontWeight={"900"} fontSize={"12px"}>{user.username}</Text>
@@ -29,4 +35,3 @@ export const SuggestedUser = ({user}) => {
     </Flex>
   )
 }
-
