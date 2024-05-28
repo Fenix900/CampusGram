@@ -83,7 +83,7 @@ const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to f
             }
             setIsLoading(false)
         } catch (error) {
-            showMessage("Error",error,"error")
+            showMessage("Error",error.message,"error")
             setIsLoading(false)
         }
     }
