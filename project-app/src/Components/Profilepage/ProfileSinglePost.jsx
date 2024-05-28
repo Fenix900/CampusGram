@@ -3,11 +3,14 @@ import React from 'react'
 import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton} from '@chakra-ui/react'
 import Comment from './Comment'
 import useProfileInfoStore from '../../globalStates/profileInfoStore'
+import useAuthStore from '../../globalStates/authStore'
 //This is one post that will show the image with an overlay to see like and comments
 export const ProfileSinglePost = ({img,likes,comments,caption}) => {
     //Hook for open and closing pop-ups
 const { isOpen, onOpen, onClose } = useDisclosure()
 const {userProfileInfo} = useProfileInfoStore();
+const loggedInUser = useAuthStore((state) => state.user)
+const isOurPost = userProfileInfo.userID === loggedInUser.userID;
   return (
     <div>
         <GridItem cursor={"pointer"} borderRadius={6} aspectRatio={1/1} position={"relative"} onClick={onOpen}>
@@ -43,7 +46,10 @@ const {userProfileInfo} = useProfileInfoStore();
                 <Flex alignItems={"center"} gap={4}>
                     <Avatar src={userProfileInfo.profilePicture} size={{md:"md",base:"sm"}}/>
                     <Text>{userProfileInfo.username}</Text>
-                    <Button bg={"red.600"} _hover={{bg:"gray.200", color:"red"}} size={"xs"}>Delete post</Button>
+                    {isOurPost ? //We show the delete button if it is our own post
+                        <Button bg={"red.600"} _hover={{bg:"gray.200", color:"red"}} size={"xs"}>Delete post</Button>
+                        : null
+                    }
                 </Flex>
             </ModalHeader>
             <ModalCloseButton />
