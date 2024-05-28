@@ -11,6 +11,11 @@ const useSearchForUser = () => {
 
     const searchUser = async (username) => { //Username is the search string we want to look for in our documents
         setIsLoading(true)
+        if(username === ""){
+            showMessage("Field empty","Could not search with empty","warning")
+            setIsLoading(false)
+            return
+        }
         try {
           const usersRef = collection(firestore, 'users')
           const q = query(usersRef, where('usernameLower', '==', username.toLowerCase()))
@@ -18,7 +23,7 @@ const useSearchForUser = () => {
           
           if (querySnapshot.empty) {
             setUser(null)
-            showMessage("No users found","Could not find user with name "+username, "warning")
+            showMessage("No users found","Could not find user with name '"+username+"'", "warning")
           } else {
             querySnapshot.forEach((doc) => {
               setUser({ id: doc.id, ...doc.data() })
