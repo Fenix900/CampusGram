@@ -7,7 +7,8 @@ import {useSignOut} from "react-firebase-hooks/auth"
 import { auth } from '../../Firebase/firebase';
 import { useDisplayError } from '../../hooks/useDisplayError';
 import useAuthStore from "../../globalStates/authStore"
-import useProfileInfoStore from '../../globalStates/profileInfoStore'
+import searchIcon from "../Assets/search.png"
+import SidebarOrderItems from './SidebarOrderItems'
 
 //This is the side bar that is being imported to the layout
 const Sidebar = () => {
@@ -29,29 +30,6 @@ const Sidebar = () => {
             showMessage("Error",error.message,"error")
         }
     }
-    //These are the sidebar icons and what they are
-    const sidebarItems = [
-        {
-            icon: <Image src={TestICON} width={'50px'} />,
-            text: "Home",
-            link: "/home",
-        },
-        {
-            icon: <Image src={TestICON} width={'50px'} />,
-            text: "Search",
-            link: "/home",
-        },
-        {
-            icon: <Image src={TestICON} width={'50px'} />,
-            text: "Notifications",
-            link: "/home",
-        },
-        {
-            icon: <Avatar size={{ base: "sm", md: "md" }} name={userInfo.username} src={userInfo.profilePicture} />,
-            text: "Profile",
-            link: "/"+userInfo.usernameLower, //Navigate to user profile with help of "userInfo.usernameLower" as path
-        },
-    ];
     return (
         <Box
         height={"100vh"}
@@ -79,25 +57,8 @@ const Sidebar = () => {
                 </Link>
 
                 <Flex direction={"column"} gap={5} cursor={"pointer "}>
-                    {sidebarItems.map((item,index)=>( 
-                         <Tooltip key={index} hasArrow  label={item.text} placement='right' openDelay={300} ml={2} display={{md:"none", base:"block" /* Maybe none for md*/}}>
-                             <Link 
-                             display={"flex"}
-                             to={item.link || null}
-                             as={ReactRouterLink}
-                             alignItems={"center"}
-                             gap={5}
-                             _hover={{bg:"gray.700"}}
-                             borderRadius={6}
-                             p={2}
-                             w={"full"}
-                             justifyContent={{base:"center", md:"flex-start"}}
-                             >
-                                {item.icon}
-                                <Box display={{base:"none", md:"block"}}>{item.text}</Box>
-                             </Link> 
-                         </Tooltip> 
-                    ))}
+                    {/*Here we have all the sidebar items except the logout item */}
+                    <SidebarOrderItems />
                 </Flex>
                 {/*signout icon*/}
                 <Tooltip hasArrow  label={"Logout"} placement='right' openDelay={300} ml={2} display={{md:"none", base:"block"}}>
@@ -111,6 +72,7 @@ const Sidebar = () => {
                         w={"full"}
                         justifyContent={{base:"center", md:"flex-start"}}
                         mt={"auto"}
+                        cursor="pointer"
                         >
                         {//Shows a spinner if it is loading
                         loadilng_logout ? (<Spinner size="xl" />) : (<Image src={signOut_icon} boxSize={{base:"40px",md:"60px"}}></Image>)}

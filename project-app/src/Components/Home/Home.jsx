@@ -22,7 +22,7 @@ export default function Home() {
           maxW={"300px"}
           borderLeft={"1px solid grey"}
           >
-            <Suggestions></Suggestions>
+            <Suggestions />
           </Box>
         </Flex>
       </Container>
