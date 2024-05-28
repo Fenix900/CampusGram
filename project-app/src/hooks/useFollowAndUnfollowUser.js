@@ -17,7 +17,7 @@ const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to f
             const isFollowingUser = signedInUser.following.includes(userID) //isFollowingUser is true if "following" contains the user
             setIsFollowing(isFollowingUser) //Set the isFollowing if we follow userID or not
         }
-    },[userID, signedInUser])
+    },[userID, signedInUser, signedInUser.following])
 
     const handleFollowOrUnfollowUser = async () => {
         setIsLoading(true)
@@ -43,10 +43,17 @@ const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to f
                     following: signedInUser.following.filter(id => id !== userID)
                 }))
                 //Other user
+                if(userProfileInfo.usernameLower !== signedInUser.usernameLower){ //If we are on someone else profile and follow them
                 setUserProfileInfo({    //Removes the followers from other persons profile (We remove ourself from anothers followers)
                     ...userProfileInfo,
                     followers: userProfileInfo.followers.filter(id => id !== signedInUser.userID)
-                })
+                })}
+                else{//This runs when we are on our own profile and follow someone through like the search function, which will update our own profile
+                    setUserProfileInfo({    //Removes the followers from other persons profile (We remove ourself from anothers followers)
+                        ...userProfileInfo,
+                        following: userProfileInfo.following.filter(id => id !== userID)
+                    })
+                }
                 setIsFollowing(false)
             }
             else{   //Follow user
@@ -61,10 +68,17 @@ const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to f
                     following: [...signedInUser.following, userID]
                 }))
                 //Other user
+                if(userProfileInfo.usernameLower !== signedInUser.usernameLower){
                 setUserProfileInfo({    //Adds our profile to other users followers
                     ...userProfileInfo,
                     followers: [...userProfileInfo.followers, signedInUser.userID]
-                })
+                })}
+                else{ //When we are on our own profile and follow someone thorugh like the search function
+                    setUserProfileInfo({   //If we are on our own profile and follow someone we want to update our profile
+                        ...userProfileInfo,
+                        following: [...userProfileInfo.following, userID]
+                    })
+                }
                 setIsFollowing(true)
             }
             setIsLoading(false)

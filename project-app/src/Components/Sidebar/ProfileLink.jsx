@@ -8,6 +8,7 @@ const ProfileLink = () => {
   const userInfo = useAuthStore((state) => state.user);    //Get user info (Fetch user information locally)
 
   return (
+    <>
     <Tooltip hasArrow label={"Profile"} placement='right' openDelay={300} ml={2} display={{md:"none", base:"block" }}>
         <Link 
         display={"flex"}
@@ -36,6 +37,7 @@ const ProfileLink = () => {
           </Flex>
         </Link> 
     </Tooltip> 
+    </>
   )
 }
 
