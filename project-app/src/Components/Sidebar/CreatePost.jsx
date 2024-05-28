@@ -26,11 +26,6 @@ const CreatePost = () => {
   }
   const handleImageUpload = (event) => { //Copied from edit profile
     const file = event.target.files[0];
-    console.log(file.size)
-    if (file.size > 848487) { //good enough value, because firebase complain
-      showMessage("Error", "File is too large", "error");
-      return; // Exit the function if file size is too large
-    }
     const reader = new FileReader();
     reader.onloadend = () => {
       setPicture(reader.result);
@@ -130,7 +125,6 @@ function useCreatePost() { //hook to create a post
       throw new Error('No image selected');
     }
     const newPost = { //This is a post, what it should contain 
-      image: picture,
       descText: descriptionText,
       likes: [],
       comments: [],
@@ -141,17 +135,22 @@ function useCreatePost() { //hook to create a post
       const postDoc = await addDoc(collection(firestore,"posts"),newPost); //Adds document to store the new image information in directory "posts"
       const userDoc = doc(firestore,"users",loggedInUser.userID); //Gets the document for the user that is signed in
       const imageRef = ref(storage, "posts/"+postDoc.id)  // The reference to where the image will be stored in Firebase Storage
-      await updateDoc(userDoc, {posts:arrayUnion(postDoc.id)}); //Adds the new posts id to the users posts array so we can track them up later
+      //await updateDoc(userDoc, {posts:arrayUnion(postDoc.id)}); //Adds the new posts id to the users posts array so we can track them up later
       await uploadString(imageRef, picture, "data_url"); //here we upload the image "picture" at the "imageRef" position on firebase storage (but as string)
-      const downloadURL = await getDownloadURL(imageRef); //Here we get the url for the image that we uploaded
-      await updateDoc(postDoc, {imageURL:downloadURL}); //Here we update the postDoc (on cloud) which is the document where we save the info about the image, and we add the downloadURL to it
-
-      newPost.imageURL = downloadURL;  //We set the url on the newPost locally too
-      createPost({...newPost, id:postDoc.id});
-      addPost({...newPost, id:postDoc.id})
+      const downloadURL = await getDownloadURL(imageRef); //Here we get the url for the image that we just uploaded
+      await updateDoc(postDoc, {imageURL:downloadURL}); //Here we update the postDoc (on cloud) which is the document where we save the info about the image, 
+                                                                      ///and we add the downloadURL to it which is a new variable in this document
+      // Update the local newPost object with the image URL and ID
+      newPost.imageURL = downloadURL;
+      newPost.id = postDoc.id;
+      // Update the user document to include the new post ID (on the cloud)
+      await updateDoc(userDoc, { posts: arrayUnion(postDoc.id) });
+      
+      // Update the local state and stores
+      createPost(newPost);
+      addPost(newPost);
 
       showMessage("Post created","Posted successfully","success");
-
     } catch (error) {
       console.log(error)
       showMessage("Error",error.message,"error")
