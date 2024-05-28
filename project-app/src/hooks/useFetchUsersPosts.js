@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { firestore } from '../Firebase/firebase';
-import useAuthStore from '../globalStates/authStore';
 import useProfileInfoStore from '../globalStates/profileInfoStore';
 
 const useFetchUsersPosts = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [userPosts, setUserPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]); //UPDATE THIS TO GET GLOBAL HOOKS INSTEAD (WILL NEED THAT LATER FOR DELTEING AND SO ON)
   const { userProfileInfo } = useProfileInfoStore();
-  const loggedInUser = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const fetchUsersPosts = async () => {
@@ -18,15 +16,16 @@ const useFetchUsersPosts = () => {
             setIsLoading(false)
             return; // Exit if there isn't a user profile
         }
-        const q = query(
+        const q = query( //Gets the query for all the posts by a specific user by using the variable in documents "createByUser" which is the userID from who created the post
           collection(firestore, 'posts'),
           where('createByUser', '==', userProfileInfo.userID)
         );
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(q); //Gets the documents
         const posts = [];
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((doc) => { //Fills the "posts" with users and its data
           posts.push({ id: doc.id, ...doc.data() });
         });
+        posts.sort((a,b) => b.createdTime - a.createdTime); //sort by date
         setUserPosts(posts);
       } catch (error) {
         console.error('Error fetching user posts:', error);
@@ -37,9 +36,7 @@ const useFetchUsersPosts = () => {
 
     fetchUsersPosts();
 
-    // Clean-up function
-    return () => setUserPosts([]);
-  }, [loggedInUser]);
+  }, [userProfileInfo]);
 
   return { isLoading, userPosts };
 };
