@@ -116,7 +116,7 @@ function useCreatePost() { //hook to create a post
   const [isLoading, setIsLoading] = useState(false);
   const {createPost} = usePostsStore();
   const loggedInUser = useAuthStore((state) => state.user);
-  const addPost = useProfileInfoStore((state) => state.addPost); 
+  const {addPost,userProfileInfo} = useProfileInfoStore(); 
   const showMessage = useDisplayError();
 
   const handleCreatePost = async(picture, descriptionText) =>{
@@ -149,8 +149,9 @@ function useCreatePost() { //hook to create a post
       
       // Update the local state and stores
       createPost(newPost);
-      addPost(newPost);
-
+      if(userProfileInfo){
+        addPost(newPost);
+      }
       showMessage("Post created","Posted successfully","success");
     } catch (error) {
       console.log(error)
