@@ -48,9 +48,24 @@ const { isOpen, onOpen, onClose } = useDisclosure()
             <ModalCloseButton />
             <ModalBody>
             <Flex flexDirection={{base:"column",sm:"row"}} gap={10} >
-                <Box overflow={"hidden"}>
-                    <Image src={img} alt='Could not load'/>
-                </Box>
+            <Box
+                overflow={"hidden"}
+                maxH={"80vh"}
+                maxW={"100%"}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Image
+                    src={img}
+                    alt='Could not load'
+                    objectFit={"contain"}
+                    maxH={{base:"40vh",sm:"80vh"}}
+                    maxW={"100%"}
+                    height="auto"
+                    width="auto"
+                />
+            </Box>
                 {/*Fix this so that the comment section title is above all other! at all ti,mes */}
                 <Flex flexDirection={"column"} gap={2}>
                     <Text alignSelf={"center"} fontWeight={"900"} fontSize={"sm"} borderBottom={"1px solid gray"} w={"full"} textAlign={"center"}>Comments section</Text>
