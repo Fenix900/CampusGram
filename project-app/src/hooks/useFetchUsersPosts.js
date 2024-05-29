@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { firestore } from '../Firebase/firebase';
 import useProfileInfoStore from '../globalStates/profileInfoStore';
+import usePostsStore from '../globalStates/postsStore';
 
 const useFetchUsersPosts = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [userPosts, setUserPosts] = useState([]); //UPDATE THIS TO GET GLOBAL HOOKS INSTEAD (WILL NEED THAT LATER FOR DELTEING AND SO ON)
+  const {posts, setPosts} = usePostsStore();
   const { userProfileInfo } = useProfileInfoStore();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const useFetchUsersPosts = () => {
           posts.push({ id: doc.id, ...doc.data() });
         });
         posts.sort((a,b) => b.createdTime - a.createdTime); //sort by date
-        setUserPosts(posts);
+        setPosts(posts);
       } catch (error) {
         console.error('Error fetching user posts:', error);
       } finally {
@@ -38,7 +39,7 @@ const useFetchUsersPosts = () => {
 
   }, [userProfileInfo]);
 
-  return { isLoading, userPosts };
+  return { isLoading, posts };
 };
 
 export default useFetchUsersPosts;

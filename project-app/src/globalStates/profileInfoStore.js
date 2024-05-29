@@ -8,6 +8,13 @@ const useProfileInfoStore = create((set) => ({
     //Add a new postID to the posts array 
     addPost: (post) => set(state =>({
         userProfileInfo: {...state.userProfileInfo, posts:[post.id, ...state.userProfileInfo.posts]}
+    })),
+    // Delete a postID from the posts array
+    deletePost: (postId) => set(state => ({
+        userProfileInfo: {
+            ...state.userProfileInfo,
+            posts: state.userProfileInfo.posts.filter(id => id !== postId)
+        }
     }))
 })) 
 
