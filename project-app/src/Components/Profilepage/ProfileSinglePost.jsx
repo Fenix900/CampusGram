@@ -2,10 +2,17 @@ import { Avatar, Box, Button, Flex, GridItem, Image, Input, Text, useDisclosure 
 import React from 'react'
 import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton} from '@chakra-ui/react'
 import Comment from './Comment'
+import useProfileInfoStore from '../../globalStates/profileInfoStore'
+import useAuthStore from '../../globalStates/authStore'
 //This is one post that will show the image with an overlay to see like and comments
-export const ProfileSinglePost = ({img,likes,comments}) => {
+export const ProfileSinglePost = ({img,likes,comments,caption}) => {
     //Hook for open and closing pop-ups
 const { isOpen, onOpen, onClose } = useDisclosure()
+const {userProfileInfo} = useProfileInfoStore();
+const loggedInUser = useAuthStore((state) => state.user)
+
+const isLoggedIn = loggedInUser !== null ? true : false; //are the user logged in?
+const showDeleteButton = isLoggedIn && userProfileInfo.userID === loggedInUser.userID; //If the user is logged in and its their profile we show the delete button
 
   return (
     <div>
@@ -40,19 +47,42 @@ const { isOpen, onOpen, onClose } = useDisclosure()
         <ModalContent pb={5}>
             <ModalHeader>
                 <Flex alignItems={"center"} gap={4}>
-                    <Avatar src={img} size={{md:"md",base:"sm"}}/>
-                    <Text>Username</Text>
-                    <Button bg={"red.600"} _hover={{bg:"gray.200", color:"red"}} size={"xs"}>Delete post</Button>
+                    <Avatar src={userProfileInfo.profilePicture} size={{md:"md",base:"sm"}}/>
+                    <Text>{userProfileInfo.username}</Text>
+                    {showDeleteButton ? //We show the delete button if it is our own post
+                        <Button bg={"red.600"} _hover={{bg:"gray.200", color:"red"}} size={"xs"}>Delete post</Button>
+                        : null
+                    }
                 </Flex>
             </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
             <Flex flexDirection={{base:"column",sm:"row"}} gap={10} >
-                <Box overflow={"hidden"}>
-                    <Image src={img} alt='Could not load'/>
-                </Box>
+            <Box
+                overflow={"hidden"}
+                maxH={"80vh"}
+                maxW={"100%"}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Image
+                    src={img}
+                    alt='Could not load'
+                    objectFit={"contain"}
+                    maxH={{base:"40vh",sm:"80vh"}}
+                    maxW={"100%"}
+                    height="auto"
+                    width="auto"
+                />
+            </Box>
                 {/*Fix this so that the comment section title is above all other! at all ti,mes */}
                 <Flex flexDirection={"column"} gap={2}>
+                    {caption!=="" ? //This will pin the creators comment to the top of the comment section (IF they have written a comment)
+                            <Box>
+                                <Comment username={userProfileInfo.username} date={"FIXA DETTA"} profileImg={userProfileInfo.profilePicture} commentText={caption}/>
+                            </Box>
+                    : null}
                     <Text alignSelf={"center"} fontWeight={"900"} fontSize={"sm"} borderBottom={"1px solid gray"} w={"full"} textAlign={"center"}>Comments section</Text>
                     <Flex 
                     flexDirection={"column"} 
