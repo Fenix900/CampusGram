@@ -4,7 +4,11 @@ import {create} from "zustand"
 const useProfileInfoStore = create((set) => ({
     userProfileInfo:null,
     //Takes in new value for profile information "NewUserProfileInfo" and updates userProfileInfo with it
-    setUserProfileInfo:(NewUserProfileInfo) => set({userProfileInfo:NewUserProfileInfo})
+    setUserProfileInfo:(NewUserProfileInfo) => set({userProfileInfo:NewUserProfileInfo}),
+    //Add a new postID to the posts array 
+    addPost: (post) => set(state =>({
+        userProfileInfo: {...state.userProfileInfo, posts:[post.id, ...state.userProfileInfo.posts]}
+    }))
 })) 
 
 export default useProfileInfoStore
