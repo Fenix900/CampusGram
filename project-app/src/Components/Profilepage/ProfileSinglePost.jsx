@@ -10,7 +10,10 @@ export const ProfileSinglePost = ({img,likes,comments,caption}) => {
 const { isOpen, onOpen, onClose } = useDisclosure()
 const {userProfileInfo} = useProfileInfoStore();
 const loggedInUser = useAuthStore((state) => state.user)
-const isOurPost = userProfileInfo.userID === loggedInUser.userID;
+
+const isLoggedIn = loggedInUser !== null ? true : false; //are the user logged in?
+const showDeleteButton = isLoggedIn && userProfileInfo.userID === loggedInUser.userID; //If the user is logged in and its their profile we show the delete button
+
   return (
     <div>
         <GridItem cursor={"pointer"} borderRadius={6} aspectRatio={1/1} position={"relative"} onClick={onOpen}>
@@ -46,7 +49,7 @@ const isOurPost = userProfileInfo.userID === loggedInUser.userID;
                 <Flex alignItems={"center"} gap={4}>
                     <Avatar src={userProfileInfo.profilePicture} size={{md:"md",base:"sm"}}/>
                     <Text>{userProfileInfo.username}</Text>
-                    {isOurPost ? //We show the delete button if it is our own post
+                    {showDeleteButton ? //We show the delete button if it is our own post
                         <Button bg={"red.600"} _hover={{bg:"gray.200", color:"red"}} size={"xs"}>Delete post</Button>
                         : null
                     }

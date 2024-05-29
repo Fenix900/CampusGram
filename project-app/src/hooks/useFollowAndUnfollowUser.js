@@ -17,7 +17,7 @@ const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to f
             const isFollowingUser = signedInUser.following.includes(userID) //isFollowingUser is true if "following" contains the user
             setIsFollowing(isFollowingUser) //Set the isFollowing if we follow userID or not
         }
-    },[userID, signedInUser, signedInUser.following])
+    },[userID, signedInUser])
 
     const handleFollowOrUnfollowUser = async () => {
         setIsLoading(true)
