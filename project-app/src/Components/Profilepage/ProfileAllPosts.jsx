@@ -6,7 +6,6 @@ import useFetchUsersPosts from '../../hooks/useFetchUsersPosts'
 
 export const ProfileAllPosts = () => {
   const {isLoading, userPosts} = useFetchUsersPosts()
-  console.log("users all img",userPosts)
   const onePost = userPosts[4];
   const noPosts = userPosts.length===0 && !isLoading;
   return (
