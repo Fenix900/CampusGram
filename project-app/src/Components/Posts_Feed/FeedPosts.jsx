@@ -9,10 +9,7 @@ import profPIC from "../Assets/username.png"
 export const FeedPosts = () => {
   return (
     <Container maxW={"continer.sm"} py={10} px={2}>
-         <OnePost postedImg={TestPost1} username="Filip Kayar" profilePic={profPIC}/>
-         <OnePost postedImg={TestPost2} username="Samir Haddad" profilePic=""/>
-         <OnePost postedImg="" username="Fanny Eriksson" profilePic=""/>
-         <OnePost postedImg="" username="David Karabas" profilePic={profPIC}/>
+        <Text>POST WILL BE HERE SOON</Text>
     </Container>
   )
 }
