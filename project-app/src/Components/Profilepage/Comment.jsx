@@ -4,7 +4,7 @@ import React from 'react'
 const Comment = ({commentText}) => {
   return (
     <div>
-    <Flex alignItems="flex-start" mt={2} flexDirection="column" mr={4} mb={7} >
+    <Flex alignItems="flex-start" mt={2} flexDirection="column" mr={4} bg={"gray.600"} borderRadius={10} p={"5px"}>
       <Flex  flexDirection={"row"} w={"full"} alignItems={"center"}>
           {/*<Avatar src={profileImg} name={username} size="md" />*/}
           <Flex justifyContent={"space-between"} w={"full"} flexDirection={{md:"row", sm:"column"}} ml={2}>

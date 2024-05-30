@@ -103,16 +103,15 @@ const handleDeletePost = async () => {
             </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-            <Flex flexDirection={{base:"column",sm:"row"}} gap={10} >
+            <Flex flexDirection={{base:"column",sm:"row"}} gap={{base:2,sm:10}}>
             <Box
                 overflow={"hidden"}
-                maxH={"80vh"}
-                maxW={"100%"}
+                maxH={{ base: "40vh", sm: "80vh" }}
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
             >
-                <Image //FIX THE IMAGES DISPLAY------------------------------------------------------------------------
+                <Image
                     src={post.imageURL}
                     alt='Could not load'
                     objectFit={"contain"}
@@ -122,26 +121,25 @@ const handleDeletePost = async () => {
                     width="auto"
                 />
             </Box>
-                {/*Fix this so that the comment section title is above all other! at all ti,mes */}
-                <Flex flexDirection={"column"} gap={2}>
-                    {post.descText!=="" ? //This will pin the creators comment to the top of the comment section (IF they have written a comment)
-                            <Box>
-                                <Comment username={userProfileInfo.username} date={"FIXA DETTA"} profileImg={userProfileInfo.profilePicture} commentText={post.descText}/>
-                            </Box>
-                    : null}
-                    <Text alignSelf={"center"} fontWeight={"900"} fontSize={"sm"} borderBottom={"1px solid gray"} w={"full"} textAlign={"center"}>Comments section</Text>
-                    <Flex 
-                    flexDirection={"column"} 
-                    maxW={{md:"40vw",sm:"50vw", base:"100vw"}} 
-                    fontSize={{md:"md",sm:"sm", base:"md"}} 
-                    gap={2} 
-                    overflowY={"scroll"} 
-                    maxH={{md:"400px",sm:"350px", base:"200px"}}
-                    borderBottom={"1px solid gray"}
-                    mb={2}>
-                        {post.comments.map((comment) => (
-                            <Comment key={comment.id} commentText={comment.commentText}/>
-                        ))}
+                <Flex justifyContent={"space-between"} flexDirection={"column"} w={{base:"full",md:"60%"}}>
+                    <Flex flexDirection={"column"} gap={2} h={"full"} borderBottom={"1px solid gray"}>
+                        {post.descText!=="" ? //This will pin the creators comment to the top of the comment section (IF they have written a comment)
+                        <Box>
+                            <Comment username={userProfileInfo.username} date={"FIXA DETTA"} profileImg={userProfileInfo.profilePicture} commentText={post.descText}/>
+                        </Box>
+                        : null}
+                        <Text alignSelf={"center"} fontWeight={"900"} fontSize={"sm"} borderBottom={"1px solid gray"} w={"full"} textAlign={"center"}>Comments section</Text>
+                        <Flex 
+                        flexDirection={"column"} 
+                        fontSize={{md:"md",sm:"sm", base:"md"}} 
+                        gap={3} 
+                        overflowY={"scroll"} 
+                        maxH={{sm: "45vh",md:"50vh", base: "175px" }}
+                        mb={2}>
+                            {post.comments.map((comment) => (
+                                <Comment key={comment.id} commentText={comment.commentText}/>
+                            ))}
+                        </Flex>
                     </Flex>
                     <PostFooter username={"filip"} isPostInFeed={false} post={post}/>
                 </Flex>

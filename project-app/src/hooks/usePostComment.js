@@ -14,9 +14,14 @@ const usePostComment = () => {
     const handlePostComment = async (comment, postID) => {
         if(!loggedInUser){ //Failsafe if the user is able to get here
             showMessage("Not logged in","Please sign in to comment","warning")
+            return
         }
-        if(isLoading) {//Dont run if we already are trying to post comment
+        if(isLoading) { //Dont run if we already are trying to post comment
             showMessage("Wait","Posting comment","warning")
+            return
+        }
+        if(comment === ""){
+            showMessage("Empty comment","Can't post nothing as comment","error") 
             return
         }
         setIsLoading(true);
