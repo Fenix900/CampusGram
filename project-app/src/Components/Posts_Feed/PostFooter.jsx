@@ -36,9 +36,11 @@ export const PostFooter = ({username, isPostInFeed, post}) => { //isPostInFeed s
           <Box onClick={handleLike} cursor={"pointer"}>
             {!liked ? (<Image src={notLikedIcon} boxSize='40px'/>):(<Image src={LikedIcon} boxSize='40px'/>)}
           </Box>
+          {isPostInFeed ? //We don't want to show the comment icon if we are in the profile and viewing 
           <Box cursor={"pointer"}>
             <Image src={commentsIcon}  boxSize='40px'/>
           </Box>
+          : null}
         </Flex>
         <Text fontWeight={600} fontSize={'md'}>
           {nmbrLikes} likes
@@ -54,8 +56,8 @@ export const PostFooter = ({username, isPostInFeed, post}) => { //isPostInFeed s
           </Text>
         </Text>
       </Box> : 
-      null } {/**IMPLEMENT THIS FOR WHEN WE ARE IN THE ProfilePage and looks at pictures */}
-      <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"} mb={12}>
+      null }
+      <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"}>
         <InputGroup>
         <Input 
           variant={"filled"} 
