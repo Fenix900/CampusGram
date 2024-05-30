@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { firestore } from '../../Firebase/firebase';
+import { firestore } from '../Firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
-const useFetchUserInfo = (userID) => {
+const useFetchUserInfoByUserID = (userID) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -11,12 +11,12 @@ const useFetchUserInfo = (userID) => {
       setIsLoading(true);
       setUser(null)
       try {
-        const userDocRef = doc(firestore, 'users', userId); //Ref to users doc
+        const userDocRef = doc(firestore, 'users', userID); //Ref to users doc
         const userDoc = await getDoc(userDocRef); //Fetch the users document
         if (userDoc.exists()) {
             setUser(userDoc.data())
         } else {
-            console.log(`No user found with ID: ${userId}`);
+            console.log(`No user found with ID: ${userID}`);
         }
       } catch (error) {
         console.log("COULD NOT GET USER BY ID WITH ERROR:", error)
@@ -30,7 +30,7 @@ const useFetchUserInfo = (userID) => {
     }
   }, [userID]);
 
-  return { user, isLoading};
+  return {user, isLoading};
 };
 
-export default useFetchUserInfo;
+export default useFetchUserInfoByUserID;

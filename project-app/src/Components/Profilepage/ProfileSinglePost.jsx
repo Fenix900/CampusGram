@@ -125,7 +125,8 @@ const handleDeletePost = async () => {
                     <Flex flexDirection={"column"} gap={2} h={"full"} borderBottom={"1px solid gray"}>
                         {post.descText!=="" ? //This will pin the creators comment to the top of the comment section (IF they have written a comment)
                         <Box>
-                            <Comment username={userProfileInfo.username} date={"FIXA DETTA"} profileImg={userProfileInfo.profilePicture} commentText={post.descText}/>
+                            {/* Create a comment object for the comment component that is shown from the user who created it, it is easier than creating new component */}
+                            <Comment comment={{postedByID:userProfileInfo.userID, postID:post.id, commentText:post.descText, createdDate:post.createdTime}} />
                         </Box>
                         : null}
                         <Text alignSelf={"center"} fontWeight={"900"} fontSize={"sm"} borderBottom={"1px solid gray"} w={"full"} textAlign={"center"}>Comments section</Text>
@@ -137,7 +138,7 @@ const handleDeletePost = async () => {
                         maxH={{sm: "45vh",md:"50vh", base: "175px" }}
                         mb={2}>
                             {post.comments.map((comment) => (
-                                <Comment key={comment.id} commentText={comment.commentText}/>
+                                <Comment key={comment.id} comment={comment}/>
                             ))}
                         </Flex>
                     </Flex>
