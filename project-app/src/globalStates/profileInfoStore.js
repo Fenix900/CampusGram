@@ -9,7 +9,7 @@ const useProfileInfoStore = create((set) => ({
     addPost: (post) => set(state =>({
         userProfileInfo: {...state.userProfileInfo, posts:[post.id, ...state.userProfileInfo.posts]}
     })),
-    // Delete a postID from the posts array
+    // Delete a postID from the posts array, this will decrement the number of post for reactivness
     deletePost: (postId) => set(state => ({
         userProfileInfo: {
             ...state.userProfileInfo,

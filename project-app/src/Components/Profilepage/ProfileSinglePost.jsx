@@ -10,6 +10,7 @@ import { firestore, storage } from '../../Firebase/firebase'
 import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { deleteObject, ref } from 'firebase/storage'
 import usePostsStore from '../../globalStates/postsStore'
+import { PostFooter } from '../Posts_Feed/PostFooter'
 //This is one post that will show the image with an overlay to see like and comments
 export const ProfileSinglePost = ({post}) => {
     //Hook for open and closing pop-ups
@@ -111,11 +112,11 @@ const handleDeletePost = async () => {
                 justifyContent="center"
                 alignItems="center"
             >
-                <Image
+                <Image //FIX THE IMAGES DISPLAY------------------------------------------------------------------------
                     src={post.imageURL}
                     alt='Could not load'
                     objectFit={"contain"}
-                    maxH={{base:"40vh",sm:"80vh"}}
+                    maxH={{base:"40vh",sm:"100vh"}}
                     maxW={"100%"}
                     height="auto"
                     width="auto"
@@ -135,19 +136,14 @@ const handleDeletePost = async () => {
                     fontSize={{md:"md",sm:"sm", base:"md"}} 
                     gap={2} 
                     overflowY={"scroll"} 
-                    maxH={{md:"460px",sm:"350px", base:"300px"}}
+                    maxH={{md:"400px",sm:"350px", base:"200px"}}
                     borderBottom={"1px solid gray"}
                     mb={2}>
-                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
-                        <Comment username={"Someone who has a really long name"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
-                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
-                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
-                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
-                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
-                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
-                        <Comment username={"filip"} date={"yesterday"} profileImg={img} commentText={"I really love your image, when will we see more"}/>
+                        {post.comments.map((comment) => (
+                            <Comment key={comment.id} commentText={comment.commentText}/>
+                        ))}
                     </Flex>
-                    <Text>Add the post footer here when merged!</Text>
+                    <PostFooter username={"filip"} isPostInFeed={false} post={post}/>
                 </Flex>
             </Flex>
             </ModalBody>

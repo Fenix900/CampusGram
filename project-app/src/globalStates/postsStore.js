@@ -7,8 +7,15 @@ const usePostsStore = create((set) => ({
     deletePost: (postID) => set(state => ({ // Action to delete a post by its ID
         posts: state.posts.filter(post => post.id !== postID)
     })),
+    addComment: (postID, comment) => set(state => ({ // Add a comment to a specific post (postID)
+        posts: state.posts.map(post => {
+            if (post.id === postID) {
+                return {...post,comments: [...post.comments, comment]}; //adds the comment to the correct post
+            }
+            return post;
+        })
+    })),
     //TO ADD:
-    //addComment
     //editComment
 }))
 
