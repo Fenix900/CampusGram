@@ -1,6 +1,7 @@
 import { Avatar, Box, Flex, Spinner, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import useFetchUserInfoByUserID from '../../hooks/useFetchUserInfoByUserID'
+import { Link } from 'react-router-dom'
 
 const Comment = ({comment}) => {
   const  {user, isLoading} = useFetchUserInfoByUserID(comment.postedByID)
@@ -27,7 +28,9 @@ const Comment = ({comment}) => {
     {!isLoading ?
       <Flex alignItems="flex-start" mt={2} flexDirection="column" mr={4} bg={"gray.600"} borderRadius={10} p={"5px"}>
         <Flex  flexDirection={"row"} w={"full"} alignItems={"center"}>
+          <Link to={"/"+user.usernameLower}>
             <Avatar src={user.profilePicture} name={user.username} size="md" />
+          </Link>
             <Flex justifyContent={"space-between"} w={"full"} flexDirection={{md:"row", sm:"column"}} ml={2}>
               <Text fontWeight="bold">{user.username}</Text>
               <Text fontSize="sm" color="gray.500">{formatDate(comment.createdDate)}</Text>
