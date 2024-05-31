@@ -5,23 +5,16 @@ import useFetchUsersPosts from '../../hooks/useFetchUsersPosts'
 
 
 export const ProfileAllPosts = () => {
-  const {isLoading, userPosts} = useFetchUsersPosts()
-  const onePost = userPosts[4];
-  const noPosts = userPosts.length===0 && !isLoading;
+  const {isLoading, posts} = useFetchUsersPosts()
+  const noPosts = posts.length===0 && !isLoading;
   return (
     <Box display={"flex"} justifyContent={"center"}>
       {isLoading ? <Spinner size={"2xl"}/> 
       :
       noPosts ? <Text fontSize="xl" fontWeight="bold" color="gray.600" textAlign={"center"}>No posts yet</Text> :
       <Grid templateColumns='repeat(3, 1fr)' gap={4}>
-        {userPosts.map((post) => ( //This maps all the images to <ProfileSinglePost/> with corresponding values
-        <ProfileSinglePost
-          key={post.id}
-          img={post.imageURL}
-          likes={post.likes.length}
-          comments={post.comments.length}
-          caption={post.descText}
-        />
+        {posts.map((post) => ( //This maps all the images to <ProfileSinglePost/> with corresponding values
+        <ProfileSinglePost post={post}/>
         ))}
       </Grid>
       }

@@ -9,7 +9,7 @@ export const OnePost = ({postedImg,username,profilePic}) => {
     <div>
       <PostHeader username={username} profilePic={profilePic}/>
       <Image src={postedImg} alt={"Whops, couldn't load image from "+ username} my={2}/>
-      <PostFooter username={username}/>
+      <PostFooter username={username} isPostInFeed={true}/>
     </div>
   )
 }
