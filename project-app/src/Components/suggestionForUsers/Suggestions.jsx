@@ -13,7 +13,6 @@ export const Suggestions = () => {
                 <Spinner size={"xl"}/>
               </Flex>
   }
-  console.log("suggestedUsersSmall",suggestedUsersSmall,"suggestedUsersLarge",suggestedUsersLarge)
   return (
         <VStack pt={15} px={4} gap={"30px"} >
         {/*header for suggested users*/}
