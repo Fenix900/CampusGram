@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/react'
+import { Container, Text } from '@chakra-ui/react'
 import { OnePost } from './OnePost'
 import TestPost1 from "../Assets/LIS_Test.png"
 import TestPost2 from "../Assets/mc.png"

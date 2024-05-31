@@ -1,7 +1,6 @@
 import { Box, Button, Flex, FormControl, FormHelperText, FormLabel, Image, Input, InputGroup, InputRightAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spinner, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import {Link as ReactRouterLink} from 'react-router-dom'
 import searchIcon from "../Assets/search.png"
 import useSearchForUser from '../../hooks/useSearchForUser'
 import { SuggestedUser } from '../suggestionForUsers/SuggestedUser'
@@ -69,9 +68,9 @@ const Search = () => {
             </FormControl>
             </form>
             <Flex flexDirection={"column"}>
-            {users .filter(user => user.usernameLower !== loggedInUser.usernameLower).map(user => ( //Show users that isn't the logged in on
+            {users .filter(user => user.usernameLower !== loggedInUser.usernameLower).map(user => ( //Remove user that is logged in (we filter our own profile)
                 <Flex key={user.userID} p={2} alignItems="center">
-                  <SuggestedUser user={user}/>  {/* Show the user with the suggested user component */}
+                  <SuggestedUser user={user} onClick={handleClose}/>
                 </Flex>
               ))
             }
