@@ -41,11 +41,16 @@ export const PostFooter = ({username, isPostInFeed, post}) => { //isPostInFeed s
         <Text fontWeight={800} fontSize={"sm"} mb={2}>
           {username} {" "}
           <Text as={"span"} fontWeight={400}>
-            Isn't it nice?
+            {post.descText}
           </Text>
+          {post.comments.length === 0 ? 
           <Text fontWeight={300} fontSize={"sm"}>
-            View all XXX comments
-          </Text>
+            No comments yet
+          </Text> 
+          :
+          <Text fontWeight={300} fontSize={"sm"}>
+            View all {post.comments.length} {post.comments.length < 2 ? "comment" : "comments"}
+          </Text>}
         </Text>
       </Box> : 
       null }
