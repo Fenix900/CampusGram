@@ -14,7 +14,6 @@ const useGetPosts = () => {
     const {setUserProfile} = useProfileInfoStore()
 
     useEffect(() =>{
-        console.log("EFFECT")
         const fetchAllFeedPosts = async () =>{
             if(loggedInUser.following.length === 0){
                 setPosts([])
