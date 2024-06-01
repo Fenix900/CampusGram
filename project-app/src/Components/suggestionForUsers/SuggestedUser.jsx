@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import useAuthStore from '../../globalStates/authStore'
 import useFollowAndUnfollowUser from '../../hooks/useFollowAndUnfollowUser'
 import { Link } from 'react-router-dom'
+import useProfileInfoStore from '../../globalStates/profileInfoStore'
 
 export const SuggestedUser = ({user, onClick}) => {
     const [isFollow, setIsFollow] = useState(false)
     const loggedInUser = useAuthStore(state => state.user)
     const {isFollowing,handleFollowOrUnfollowUser,isLoading} = useFollowAndUnfollowUser(user.userID)
+    const setClickedUsersProfile = useProfileInfoStore(state => state.setUserProfileInfo)
 
     const handleFollow = () => {
       setIsFollow(isFollowing)
@@ -19,13 +21,18 @@ export const SuggestedUser = ({user, onClick}) => {
       setIsFollow(isFollowing);
     }, [isFollowing]);
 
+    const handleNavigateToProfile = () => {
+      setClickedUsersProfile(user)
+      onClick()
+    }
+
     if(isLoading){
       return <Spinner/>
     }
 
   return (
     <Flex justifyContent={"space-between"} w={"full"} alignItems={"center"} gap={2}>
-        <Link to={"/"+user.username} onClick={onClick} style={{ display: 'block' }}>
+        <Link to={"/"+user.username} onClick={handleNavigateToProfile} style={{ display: 'block' }}>
           <Flex gap={2} alignItems={"center"} >
             <Avatar src={user.profilePicture} name={user.username} size={"md"}/>
             <Text fontWeight={"900"} fontSize={"12px"}>{user.username}</Text>
