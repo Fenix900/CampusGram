@@ -10,8 +10,7 @@ export const PostHeader = ({username, profilePic}) => {
                 <Avatar size={"sm"} name={username} src={profilePic}/>
                 <Flex fontSize={12} fontWeight={"bold"} gap={2}>
                     <Text color={"gray.100"}>{username}</Text>
-                    <Box color={"gray.500"} ml={3}> 3 years </Box>
-                    <Text color={"gray.500"} ml={-1}>ago</Text>
+                    <Box color={"gray.500"} ml={3}> IMPLEMENT ME </Box>
                 </Flex>
             </Flex>
             <Box cursor={"pointer"}>
@@ -22,7 +21,7 @@ export const PostHeader = ({username, profilePic}) => {
                 _hover={{color:"red.400"}}
                 transition={"0.1s ease-in-out"}
                 >
-                    Unfollow
+                    Unfollow (Implement this function)
                 </Text>
             </Box>
         </Flex>

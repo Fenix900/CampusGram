@@ -1,15 +1,22 @@
 import React from 'react'
 import { PostHeader } from './PostHeader'
-import { Image } from '@chakra-ui/react'
+import { Box, Image, Spinner } from '@chakra-ui/react'
 import { PostFooter } from './PostFooter'
+import useFetchUserInfoByUserID from '../../hooks/useFetchUserInfoByUserID'
 
 //This is how one post is struct. (Header then the image and lastly the footer)
-export const OnePost = ({postedImg,username,profilePic}) => {
+export const OnePost = ({post}) => {
+  const {user, isLoading} = useFetchUserInfoByUserID(post.createByUser)
+  console.log(user)
   return (
     <div>
-      <PostHeader username={username} profilePic={profilePic}/>
-      <Image src={postedImg} alt={"Whops, couldn't load image from "+ username} my={2}/>
-      <PostFooter username={username} isPostInFeed={true}/>
+        {isLoading ? <Spinner /> :
+          <Box>
+            <PostHeader username={user.username} profilePic={user.profilePicture}/>
+            <Image src={post.imageURL} alt={"Whops, couldn't load image from "+ user.username} my={2}/>
+            <PostFooter username={user.username} isPostInFeed={true} post={post}/>
+          </Box>
+        }
     </div>
   )
 }

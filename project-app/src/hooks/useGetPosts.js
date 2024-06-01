@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import usePostsStore from '../globalStates/postsStore'
 import useAuthStore from '../globalStates/authStore'
 import { useDisplayError } from './useDisplayError'
-import { Firestore, collection, getDocs, query, where } from 'firebase/firestore'
+import { Firestore, collection, doc, getDocs, query, where } from 'firebase/firestore'
 import { firestore } from '../Firebase/firebase'
 import useProfileInfoStore from '../globalStates/profileInfoStore'
 
@@ -14,6 +14,7 @@ const useGetPosts = () => {
     const {setUserProfile} = useProfileInfoStore()
 
     useEffect(() =>{
+        console.log("EFFECT")
         const fetchAllFeedPosts = async () =>{
             if(loggedInUser.following.length === 0){
                 setPosts([])
@@ -22,13 +23,13 @@ const useGetPosts = () => {
             if(isLoading) return;
             setIsLoading(true)
             try {
-                const postsRef = collection(firestore, "posts")
-                const q = query(postsRef,where("createByUser","in",loggedInUser.following))
+                const postsRef = collection(firestore, 'posts')
+                const q = query(postsRef, where("createByUser", "in", loggedInUser.following))
                 const querySnapshot = await getDocs(q)
                 const postsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-                const postsDataSorted = postsData.sort((a,b) => a.createdTime - b.createdTime)
+                const postsDataSorted = postsData.sort((a, b) => b.createdTime - a.createdTime) //Sort the posts by the date
                 setPosts(postsDataSorted)
-            } catch (error) {
+            } catch (error){
                 showMessage("Error",error.message,"error")
             }finally{
                 setIsLoading(false)
@@ -37,7 +38,7 @@ const useGetPosts = () => {
         if(loggedInUser){
             fetchAllFeedPosts();
         }
-    },[loggedInUser, setPosts, isLoading,setUserProfile])
+    },[loggedInUser, setPosts,setUserProfile])
     return {posts, isLoading}
 }
 

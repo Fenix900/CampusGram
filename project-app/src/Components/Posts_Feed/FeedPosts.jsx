@@ -1,4 +1,4 @@
-import { Container, Text } from '@chakra-ui/react'
+import { Box, Container, Image, Text } from '@chakra-ui/react'
 import { OnePost } from './OnePost'
 import TestPost1 from "../Assets/LIS_Test.png"
 import TestPost2 from "../Assets/mc.png"
@@ -9,10 +9,15 @@ import useGetPosts from '../../hooks/useGetPosts'
 
 export const FeedPosts = () => {
   const {posts, isLoading} = useGetPosts();
-  console.log(posts)
   return (
     <Container maxW={"continer.sm"} py={10} px={2}>
-
+      {!isLoading && posts.length>0 ?
+      <Box>
+        { posts.map((post) =>
+          <OnePost post={post}/> //We pass the information about the post to this component 
+        ) }
+      </Box>
+      : null}
     </Container>
   )
 }
