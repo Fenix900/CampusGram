@@ -5,6 +5,7 @@ import { ProfileSinglePost } from './ProfileSinglePost';
 
 const LikedImages = () => {
   const {isLoading, likedPosts} = useFetchLikedImages()
+  console.log("likedPosts",likedPosts)
   const noLikedPosts = likedPosts.length===0 && !isLoading;
   return (
       <Box display={"flex"} justifyContent={"center"}>

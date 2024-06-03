@@ -3,11 +3,12 @@ import useProfileInfoStore from '../globalStates/profileInfoStore';
 import { useDisplayError } from './useDisplayError';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { firestore } from '../Firebase/firebase';
+import usePostsStore from '../globalStates/postsStore';
 
 const useFetchLikedImages = () => {
     const [isLoading, setIsLoading] = useState(false);
     const {userProfileInfo} = useProfileInfoStore()
-    const [likedPosts, setLikedPosts] = useState([])
+    const {likedPosts, setLikedPosts} = usePostsStore()
     const showMessage = useDisplayError()
     useEffect(() =>{
         const fetchLikedImages = async () => {
@@ -16,7 +17,6 @@ const useFetchLikedImages = () => {
             try {
                 if (!userProfileInfo) {
                     setIsLoading(false);
-                    showMessage("Something went wrong","No user found","error")
                     return; // Exit if there isn't a user profile
                 }
                 // Query to fetch liked images for the specific user
