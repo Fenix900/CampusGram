@@ -1,9 +1,18 @@
-import { Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Button, Flex, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
+import React, { useState } from 'react'
 import Comment from '../Profilepage/Comment'
 import useAuthStore from '../../globalStates/authStore'
+import { PostFooter } from './PostFooter'
+import usePostComment from '../../hooks/usePostComment'
 
 const ViewCommentPopup = ({isOpen, onClose, post}) => {
+    //This is for posting comment in the modal
+    const [comment, setComment] = useState('')
+    const {handlePostComment, isLoading} = usePostComment();
+    const handleTryToPostComment = async () =>{
+        await handlePostComment(comment, post.id)
+        setComment("")
+    }
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -21,6 +30,20 @@ const ViewCommentPopup = ({isOpen, onClose, post}) => {
                             <Comment key={comment.id} comment={comment}/>
                         ))}
                     </ModalBody>
+                    <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"} p={5}>
+                            <InputGroup>
+                            <Input 
+                            variant={"filled"} 
+                            placeholder={"Write something nice..."} 
+                            fontSize={"md"} 
+                            _placeholder={{ opacity: 1, color: 'gray.600' }} 
+                            value={comment} 
+                            onChange={(e) => setComment(e.target.value)}/>
+                            <InputRightElement>
+                                <Button fontSize={"sm"} color={"blue.400"} bg={"transparent"} _hover={{color:"white"}} onClick={handleTryToPostComment} isLoading={isLoading}>Post</Button>
+                            </InputRightElement>
+                            </InputGroup>
+                        </Flex>
                 </ModalContent>
             </Modal>
         </>
