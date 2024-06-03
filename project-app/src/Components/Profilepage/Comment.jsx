@@ -26,7 +26,7 @@ const Comment = ({comment}) => {
   return (
     <div>
     {!isLoading ?
-      <Flex alignItems="flex-start" mt={2} flexDirection="column" mr={4} bg={"gray.600"} borderRadius={10} p={"5px"}>
+      <Flex alignItems="flex-start" mt={2} flexDirection="column" bg={"gray.600"} borderRadius={10} p={"5px"}>
         <Flex  flexDirection={"row"} w={"full"} alignItems={"center"}>
           <Link to={"/"+user.usernameLower}>
             <Avatar src={user.profilePicture} name={user.username} size="md" />

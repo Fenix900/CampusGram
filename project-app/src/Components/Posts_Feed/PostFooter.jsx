@@ -1,10 +1,12 @@
 import { Box, Button, Flex, Image, Input, InputGroup, InputRightElement, Spinner, Text } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import {useDisclosure } from '@chakra-ui/react'
 import notLikedIcon from '../Assets/LikeIconEmpty.png'
 import LikedIcon from '../Assets/LikeIconFilled.png'
 import commentsIcon from '../Assets/chat.png'
 import usePostComment from '../../hooks/usePostComment'
 import useLikePost from '../../hooks/useLikePost'
+import ViewCommentPopup from './ViewCommentPopup'
 
 //Post footer, for the like and comment icon, also the comment field.
 //We can also see the comment from the user and number of likes/comments
@@ -13,6 +15,8 @@ export const PostFooter = ({username, isPostInFeed, post}) => { //isPostInFeed s
   const [comment, setComment] = useState('')
   const {handlePostComment, isLoading} = usePostComment();
   const {isUpdating, numberOfLikes, isLiked, handleLike} = useLikePost(post)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  
   
   const handleTryToPostComment = async () =>{
     await handlePostComment(comment, post.id)
@@ -29,7 +33,7 @@ export const PostFooter = ({username, isPostInFeed, post}) => { //isPostInFeed s
             </Box> 
           : <Spinner size={"xl"}/>}
           {isPostInFeed ? //We don't want to show the comment icon if we are in the profile and viewing 
-          <Box cursor={"pointer"}>
+          <Box cursor={"pointer"} onClick={onOpen}>
             <Image src={commentsIcon}  boxSize='40px'/>
           </Box>
           : null}
@@ -48,7 +52,7 @@ export const PostFooter = ({username, isPostInFeed, post}) => { //isPostInFeed s
             No comments yet
           </Text> 
           :
-          <Text fontWeight={300} fontSize={"sm"}>
+          <Text fontWeight={300} fontSize={"sm"} onClick={onOpen} cursor={"pointer"}>
             View all {post.comments.length} {post.comments.length < 2 ? "comment" : "comments"}
           </Text>}
         </Text>
@@ -68,6 +72,7 @@ export const PostFooter = ({username, isPostInFeed, post}) => { //isPostInFeed s
           </InputRightElement>
         </InputGroup>
       </Flex>
+      <ViewCommentPopup isOpen={isOpen} onClose={onClose} post={post}/>
     </div>
     
   )
