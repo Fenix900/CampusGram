@@ -148,8 +148,8 @@ function useCreatePost() { //hook to create a post
       await updateDoc(userDoc, { posts: arrayUnion(postDoc.id) });
       
       // Update the local state and stores
-      createPost(newPost);
-      if(userProfileInfo){
+      if(userProfileInfo && userProfileInfo.userID === loggedInUser.userID){//We just want to update the profile if we are on our own
+        createPost(newPost);
         addPost(newPost);
       }
       showMessage("Post created","Posted successfully","success");

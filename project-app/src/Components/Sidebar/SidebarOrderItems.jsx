@@ -12,7 +12,6 @@ const SidebarOrderItems = () => {
     <>
         <HomeSidebar />
         <Search />
-        <Notification />
         <CreatePost />
         <ProfileLink />
     </>
