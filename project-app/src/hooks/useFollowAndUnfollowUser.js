@@ -43,16 +43,19 @@ const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to f
                     following: signedInUser.following.filter(id => id !== userID)
                 }))
                 //Other user
-                if(userProfileInfo.usernameLower !== signedInUser.usernameLower){ //If we are on someone else profile and follow them
-                setUserProfileInfo({    //Removes the followers from other persons profile (We remove ourself from anothers followers)
-                    ...userProfileInfo,
-                    followers: userProfileInfo.followers.filter(id => id !== signedInUser.userID)
-                })}
-                else{//This runs when we are on our own profile and follow someone through like the search function, which will update our own profile
+                if(userProfileInfo){ //This if-statement is if we are in a user profile, like if we add someone through suggestions we wont have a userProfileInfo, so we dont need to update it
+
+                    if(userProfileInfo.usernameLower !== signedInUser.usernameLower){ //If we are on someone else profile and follow them
                     setUserProfileInfo({    //Removes the followers from other persons profile (We remove ourself from anothers followers)
                         ...userProfileInfo,
-                        following: userProfileInfo.following.filter(id => id !== userID)
-                    })
+                        followers: userProfileInfo.followers.filter(id => id !== signedInUser.userID)
+                    })}
+                    else{//This runs when we are on our own profile and follow someone through like the search function, which will update our own profile
+                        setUserProfileInfo({    //Removes the followers from other persons profile (We remove ourself from anothers followers)
+                            ...userProfileInfo,
+                            following: userProfileInfo.following.filter(id => id !== userID)
+                        })
+                    }
                 }
                 setIsFollowing(false)
             }

@@ -17,7 +17,7 @@ export const FeedPosts = () => {
           <OnePost post={post}/> //We pass the information about the post to this component 
         ) }
       </Box>
-      : null}
+      : <Text>No posts to show, follow people to see their posts here</Text>}
     </Container>
   )
 }
