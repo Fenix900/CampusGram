@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import useProfileInfoStore from '../globalStates/profileInfoStore';
 import { useDisplayError } from './useDisplayError';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { firestore } from '../Firebase/firebase';
 
 const useFetchLikedImages = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const {userProfileInfo} = useProfileInfoStore(state => state.userProfileInfo)
+    const {userProfileInfo} = useProfileInfoStore()
     const [likedPosts, setLikedPosts] = useState([])
     const showMessage = useDisplayError()
     useEffect(() =>{
