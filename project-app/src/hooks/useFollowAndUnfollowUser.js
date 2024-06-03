@@ -68,21 +68,24 @@ const useFollowAndUnfollowUser = (userID) => { //userID is the user we want to f
                     following: [...signedInUser.following, userID]
                 }))
                 //Other user
-                if(userProfileInfo.usernameLower !== signedInUser.usernameLower){
-                setUserProfileInfo({    //Adds our profile to other users followers
-                    ...userProfileInfo,
-                    followers: [...userProfileInfo.followers, signedInUser.userID]
-                })}
-                else{ //When we are on our own profile and follow someone thorugh like the search function
-                    setUserProfileInfo({   //If we are on our own profile and follow someone we want to update our profile
+                if(userProfileInfo){ //This if-statement is if we are in a user profile, like if we add someone through suggestions we wont have a userProfileInfo, so we dont need to update it
+                    if(userProfileInfo.usernameLower !== signedInUser.usernameLower){
+                    setUserProfileInfo({    //Adds our profile to other users followers
                         ...userProfileInfo,
-                        following: [...userProfileInfo.following, userID]
-                    })
+                        followers: [...userProfileInfo.followers, signedInUser.userID]
+                    })}
+                    else{ //When we are on our own profile and follow someone thorugh like the search function
+                        setUserProfileInfo({   //If we are on our own profile and follow someone we want to update our profile
+                            ...userProfileInfo,
+                            following: [...userProfileInfo.following, userID]
+                        })
+                    }
                 }
                 setIsFollowing(true)
             }
             setIsLoading(false)
         } catch (error) {
+            console.log("ERROR IN Usefolowandunfollow",error)
             showMessage("Error",error.message,"error")
             setIsLoading(false)
         }
