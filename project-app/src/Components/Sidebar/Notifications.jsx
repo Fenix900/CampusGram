@@ -7,17 +7,15 @@ import notificationIcon from "../Assets/notification.png"
 const Notifications = () => {
   return (
     <Tooltip hasArrow label={"Notification"} placement='right' openDelay={300} ml={2} display={{md:"none", base:"block" }}>
+      <Box alignItems={"center"} justifyContent={{base:"center", md:"flex-start"}} borderRadius={6}>
         <Link 
         display={"flex"}
         to={"/"}
         as={ReactRouterLink}
-        alignItems={"center"}
         gap={5}
         _hover={{bg:"gray.700"}}
-        borderRadius={6}
         p={2}
         w={"full"}
-        justifyContent={{base:"center", md:"flex-start"}}
         >
             <Flex
             alignItems={"center"}
@@ -33,6 +31,7 @@ const Notifications = () => {
             <Box display={{base:"none", md:"block"}}>Notification</Box>
           </Flex>
         </Link> 
+      </Box>
     </Tooltip> 
   )
 }

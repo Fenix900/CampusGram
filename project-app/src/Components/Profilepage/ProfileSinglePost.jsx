@@ -142,7 +142,7 @@ const handleDeletePost = async () => {
                             ))}
                         </Flex>
                     </Flex>
-                    <PostFooter username={"filip"} isPostInFeed={false} post={post}/>
+                    <PostFooter username={userProfileInfo.username} isPostInFeed={false} post={post}/>
                 </Flex>
             </Flex>
             </ModalBody>
