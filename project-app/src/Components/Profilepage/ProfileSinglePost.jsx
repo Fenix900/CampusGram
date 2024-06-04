@@ -22,7 +22,7 @@ const showMessage = useDisplayError();
 const deletePostFunc = usePostsStore(state => state.deletePost)
 
 const isLoggedIn = loggedInUser !== null ? true : false; //are the user logged in?
-const showDeleteButton = isLoggedIn && userProfileInfo.userID === post.createByUser; //If the user is logged in and its their profile we show the delete button
+const showDeleteButton = isLoggedIn && loggedInUser.userID === post.createByUser; //If the user is logged in and its their profile we show the delete button
 
 const [isLoading, setIsLoading] = useState(false);
 const handleDeletePost = async () => {
@@ -38,7 +38,6 @@ const handleDeletePost = async () => {
     }
     try {
         console.log("started deleting")
-        console.log("post.id", post.id)
         // Delete the image from Firebase Storage
         const imageRef = ref(storage, "posts/"+post.id);
         await deleteObject(imageRef);
