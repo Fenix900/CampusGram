@@ -30,6 +30,12 @@ const usePostsStore = create((set) => ({
         })
     })),
     setLikedPosts: (likedPosts) => set({ likedPosts }), // Set the liked posts array
+    removeLikedPost: (postID) => set(state => ({ //Removes a liked post 
+        likedPosts: state.likedPosts.filter(post => post.id !== postID)
+    })),
+    addLikedPost: (post) => set(state => ({ //We add a liked post
+        likedPosts: [post, ...state.likedPosts]
+    }))
     //TO ADD:
     //editComment
 }))

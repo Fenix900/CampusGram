@@ -37,7 +37,7 @@ const useFetchLikedImages = () => {
             }
         }
         fetchLikedImages();
-    },[userProfileInfo])
+    },[userProfileInfo,likedPosts])
     return {isLoading, likedPosts}
 }
 

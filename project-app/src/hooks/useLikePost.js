@@ -12,7 +12,7 @@ const useLikePost = (post) => { //This hook will handle the like functionallity 
     const [numberOfLikes, setNumberOfLikes] = useState(post.likes.length)
     const [isLiked, setIsLiked] = useState(post.likes.includes(loggedInUser?.userID))
     const showMessage = useDisplayError()
-    const { setLikes } = usePostsStore();
+    const { setLikes, removeLikedPost, addLikedPost } = usePostsStore();
 
     const handleLike = async() => {
         if(isUpdating){return}
@@ -31,6 +31,12 @@ const useLikePost = (post) => { //This hook will handle the like functionallity 
             setIsLiked(!isLiked);
             isLiked ? setNumberOfLikes(numberOfLikes-1) : setNumberOfLikes(numberOfLikes+1)
             setLikes(post.id, loggedInUser.userID);
+            //handle liked images for liked-tab
+            if (isLiked) { //Have we liked an image we want to remove it from our poststore
+                removeLikedPost(post.id);
+            } else { //Add a liked image
+                addLikedPost(post);
+            }
         } catch (error) {
             showMessage("Error",error.message,"error")
         }finally{
