@@ -1,14 +1,14 @@
-import { Avatar, Box, Flex, Image, Link, Spinner, Text, Toast, Tooltip } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Image, Link, Spinner, Switch, Text, Toast, Tooltip } from '@chakra-ui/react'
 import React from 'react'
 import {Link as ReactRouterLink, useNavigate} from 'react-router-dom'
-import TestICON from "../Assets/Email.png"
 import signOut_icon from "../Assets/logout.png"
 import {useSignOut} from "react-firebase-hooks/auth"
 import { auth } from '../../Firebase/firebase';
 import { useDisplayError } from '../../hooks/useDisplayError';
 import useAuthStore from "../../globalStates/authStore"
-import searchIcon from "../Assets/search.png"
 import SidebarOrderItems from './SidebarOrderItems'
+import useSwitchStore from '../../globalStates/darkModeStore'
+
 
 //This is the side bar that is being imported to the layout
 const Sidebar = () => {
@@ -17,6 +17,8 @@ const Sidebar = () => {
     const UserLogOut = useAuthStore((state) => state.logout) //To sign out user (Remove user from local storage)
     const userInfo = useAuthStore((state) => state.user);    //Get user info (Fetch user information locally)
     const navigate = useNavigate()
+    const {isSwitchOn, toggleSwitch} = useSwitchStore();
+
     //This function handles logouts
     const logOutUser = async () => {
         try {
@@ -40,7 +42,7 @@ const Sidebar = () => {
         top={0}
         left={0}
         px={{base:2,md:4}}>
-            <Flex direction={'column'} gap={20}  w={"full"} height={"full"}>
+            <Flex direction={'column'} gap={20}  w={"full"} height={"95%"}>
                 <Link as={ReactRouterLink} to={'/home'} pl={2} display={{base:"none", md:"block"}} _hover={{bg:"gray.700"}}>
                     <div>
                         <Text fontSize={'29px'} as='kbd'>
@@ -79,6 +81,11 @@ const Sidebar = () => {
                         <Box display={{base:"none", md:"block"}}>{"Logout"}</Box>
                     </Flex> 
                 </Tooltip> 
+            </Flex>
+            <Flex justifyContent={"center"} alignItems={"center"}>
+                <Text>Darkmode: </Text>
+                <Switch p={5} isChecked={isSwitchOn} onChange={toggleSwitch}/>
+                <Text>{isSwitchOn ? 'ON' : 'OFF'}</Text>
             </Flex>
         </Box>
     )

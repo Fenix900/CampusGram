@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import "./Login_Signup.css"
 import { NewUser } from './NewUser'
 import { Login } from './Login'
-import { Box, Button, Switch, Text } from '@chakra-ui/react'
+import { Box, Button, Switch, Text, Flex } from '@chakra-ui/react'
 import useSwitchStore from '../../globalStates/darkModeStore'
 
 
@@ -40,13 +40,13 @@ export const Login_Signup = () => {
           Login?
         </Button>
       </div>
-        <Box>
+        <Flex justifyContent={"center"} alignItems={"center"} gap={3} pb={3}>
           <Text>Darkmode is {isSwitchOn ? 'ON' : 'OFF'}</Text>
           <Switch
             isChecked={isSwitchOn}
             onChange={toggleSwitch}
           />
-        </Box>
+        </Flex>
     </div>
   </div>
   )
