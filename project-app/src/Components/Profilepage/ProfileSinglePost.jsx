@@ -11,17 +11,19 @@ import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { deleteObject, ref } from 'firebase/storage'
 import usePostsStore from '../../globalStates/postsStore'
 import { PostFooter } from '../Posts_Feed/PostFooter'
+import useFetchUserInfoByUserID from '../../hooks/useFetchUserInfoByUserID'
 //This is one post that will show the image with an overlay to see like and comments
 export const ProfileSinglePost = ({post}) => {
     //Hook for open and closing pop-ups
 const { isOpen, onOpen, onClose } = useDisclosure()
 const {userProfileInfo, deletePost} = useProfileInfoStore();
 const loggedInUser = useAuthStore((state) => state.user)
+const {user, isLoadingGetUser} = useFetchUserInfoByUserID(post.createByUser) //This is the post owner
 const showMessage = useDisplayError();
 const deletePostFunc = usePostsStore(state => state.deletePost)
 
 const isLoggedIn = loggedInUser !== null ? true : false; //are the user logged in?
-const showDeleteButton = isLoggedIn && userProfileInfo.userID === loggedInUser.userID; //If the user is logged in and its their profile we show the delete button
+const showDeleteButton = isLoggedIn && userProfileInfo.userID === post.createByUser; //If the user is logged in and its their profile we show the delete button
 
 const [isLoading, setIsLoading] = useState(false);
 const handleDeletePost = async () => {
@@ -57,6 +59,9 @@ const handleDeletePost = async () => {
         setIsLoading(false)
     }
 }
+if(isLoadingGetUser){
+    return null
+}
 
   return (
     <div>
@@ -91,8 +96,8 @@ const handleDeletePost = async () => {
         <ModalContent pb={5}>
             <ModalHeader>
                 <Flex alignItems={"center"} gap={4}>
-                    <Avatar src={userProfileInfo.profilePicture} size={{md:"md",base:"sm"}}/>
-                    <Text>{userProfileInfo.username}</Text>
+                    <Avatar src={user?.profilePicture} size={{md:"md",base:"sm"}}/>
+                    <Text>{user?.username}</Text>
                     {showDeleteButton ? //We show the delete button if it is our own post
                         <Button bg={"red.600"} _hover={{bg:"gray.200", color:"red"}} size={"xs"} onClick={handleDeletePost} isLoading={isLoading}>
                             Delete post
@@ -126,7 +131,7 @@ const handleDeletePost = async () => {
                         {post.descText!=="" ? //This will pin the creators comment to the top of the comment section (IF they have written a comment)
                         <Box>
                             {/* Create a comment object for the comment component that is shown from the user who created it, it is easier than creating new component */}
-                            <Comment comment={{postedByID:userProfileInfo.userID, postID:post.id, commentText:post.descText, createdDate:post.createdTime}} />
+                            <Comment comment={{postedByID:user?.userID, postID:post.id, commentText:post.descText, createdDate:post.createdTime}} />
                         </Box>
                         : null}
                         <Text alignSelf={"center"} fontWeight={"900"} fontSize={"sm"} borderBottom={"1px solid gray"} w={"full"} textAlign={"center"}>Comments section</Text>
