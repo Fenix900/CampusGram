@@ -1,11 +1,10 @@
-import { Avatar, Box, Button, Flex, GridItem, Image, Input, Text, useDisclosure } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, GridItem, Image, Text, useDisclosure } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton} from '@chakra-ui/react'
 import Comment from './Comment'
 import useProfileInfoStore from '../../globalStates/profileInfoStore'
 import useAuthStore from '../../globalStates/authStore'
 import { useDisplayError } from '../../hooks/useDisplayError'
-import img from "../Assets/TestPostImage.png"
 import { firestore, storage } from '../../Firebase/firebase'
 import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { deleteObject, ref } from 'firebase/storage'

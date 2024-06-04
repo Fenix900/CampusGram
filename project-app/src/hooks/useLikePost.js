@@ -3,7 +3,6 @@ import useAuthStore from '../globalStates/authStore';
 import { useDisplayError } from './useDisplayError';
 import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../Firebase/firebase';
-import useProfileInfoStore from '../globalStates/profileInfoStore';
 import usePostsStore from '../globalStates/postsStore';
 
 const useLikePost = (post) => { //This hook will handle the like functionallity of a post

@@ -1,6 +1,5 @@
-import { Box, Container, Flex, Spinner } from '@chakra-ui/react'
+import { Container, Flex, Spinner } from '@chakra-ui/react'
 import React from 'react'
-import { ProfileAllPosts } from './ProfileAllPosts'
 import { ProfileInformation } from './ProfileInformation'
 import { ProfileSections } from './ProfileSections'
 import useGetProfileByName from '../../hooks/useGetProfileByName'

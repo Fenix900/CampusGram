@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useProfileInfoStore from '../globalStates/profileInfoStore';
 import { useDisplayError } from './useDisplayError';
 import { collection, getDocs, query, where } from 'firebase/firestore';
@@ -37,7 +37,7 @@ const useFetchLikedImages = () => {
             }
         }
         fetchLikedImages();
-    },[userProfileInfo,likedPosts])
+    },[userProfileInfo,likedPosts, setLikedPosts])
     return {isLoading, likedPosts}
 }
 

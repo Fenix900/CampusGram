@@ -1,6 +1,5 @@
 import { Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import React from 'react'
-import { Login_Signup } from '../Login_Signup/Login_Signup'
 import { ProfileAllPosts } from './ProfileAllPosts'
 import LikedImages from './LikedImages'
 
