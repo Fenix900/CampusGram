@@ -42,7 +42,7 @@ export const PostFooter = ({username, isPostInFeed, post}) => { //isPostInFeed s
           {numberOfLikes} likes
         </Text>
         {isPostInFeed ? <Box>
-        <Text fontWeight={800} fontSize={"sm"} mb={2}>
+        <Box fontWeight={800} fontSize={"sm"} mb={2}>
           {username} {" "}
           <Text as={"span"} fontWeight={400}>
             {post.descText}
@@ -55,7 +55,7 @@ export const PostFooter = ({username, isPostInFeed, post}) => { //isPostInFeed s
           <Text fontWeight={300} fontSize={"sm"} onClick={onOpen} cursor={"pointer"}>
             View all {post.comments.length} {post.comments.length < 2 ? "comment" : "comments"}
           </Text>}
-        </Text>
+        </Box>
       </Box> : 
       null }
       <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"}>

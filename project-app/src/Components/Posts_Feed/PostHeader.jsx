@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Spinner, Text } from '@chakra-ui/react'
 import React from 'react'
 import useFollowAndUnfollowUser from '../../hooks/useFollowAndUnfollowUser';
 import { Link } from 'react-router-dom';
@@ -39,6 +39,7 @@ export const PostHeader = ({username, profilePic,postDate, postOwnerUser}) => {
                 </Flex>
             </Flex>
             <Box cursor={"pointer"}>
+                {!isLoading ?
                 <Text
                 fontSize={12}
                 color={"blue.400"}
@@ -46,10 +47,10 @@ export const PostHeader = ({username, profilePic,postDate, postOwnerUser}) => {
                 _hover={{color:"red.400"}}
                 transition={"0.1s ease-in-out"}
                 onClick={handleFollowOrUnfollowUser}
-                isLoading={isLoading}
                 >
                     {isFollowing ? "Unfollow" : "Follow"}
                 </Text>
+                : <Spinner/>}
             </Box>
         </Flex>
     </div>
