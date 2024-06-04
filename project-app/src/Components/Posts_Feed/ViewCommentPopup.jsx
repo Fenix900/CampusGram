@@ -1,8 +1,6 @@
-import { Box, Button, Flex, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Flex, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import Comment from '../Profilepage/Comment'
-import useAuthStore from '../../globalStates/authStore'
-import { PostFooter } from './PostFooter'
 import usePostComment from '../../hooks/usePostComment'
 
 const ViewCommentPopup = ({isOpen, onClose, post}) => {
@@ -26,8 +24,8 @@ const ViewCommentPopup = ({isOpen, onClose, post}) => {
                             <Comment comment={{postedByID:post.createByUser, postID:post.id, commentText:post.descText, createdDate:post.createdTime}} />
                         </Box>
                         : null}
-                        {post.comments.map((comment) => ( //Display the rest of the comments
-                            <Comment key={comment.id} comment={comment}/>
+                        {post.comments.map((comment,index) => ( //Display the rest of the comments
+                            <Comment key={`${comment.createdDate}-${index}`} comment={comment}/>
                         ))}
                     </ModalBody>
                     <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"} p={5}>
