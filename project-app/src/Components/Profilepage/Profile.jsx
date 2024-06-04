@@ -23,7 +23,6 @@ export const Profile = () => {
             </Flex>
             <Flex px={{base:2, md:4}} maxW={"full"} mx={"auto"} direction={"column"}>
                 <ProfileSections />
-                <ProfileAllPosts />
             </Flex>
         </Container>
     </div>

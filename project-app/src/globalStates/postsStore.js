@@ -2,6 +2,8 @@ import {create} from "zustand";
 
 const usePostsStore = create((set) => ({
     posts: [], //The posts array
+    likedPosts: [], //The liked posts
+
     createPost: (post) => set(state => ({posts:[post, ...state.posts]})), //When we create a new post we add it to the posts array and keeps all the prev posts
     setPosts: (posts)=> set({posts}),    //We set the posts with the input "posts"
     deletePost: (postID) => set(state => ({ // Action to delete a post by its ID
@@ -27,6 +29,13 @@ const usePostsStore = create((set) => ({
             return post;
         })
     })),
+    setLikedPosts: (likedPosts) => set({ likedPosts }), // Set the liked posts array
+    removeLikedPost: (postID) => set(state => ({ //Removes a liked post 
+        likedPosts: state.likedPosts.filter(post => post.id !== postID)
+    })),
+    addLikedPost: (post) => set(state => ({ //We add a liked post
+        likedPosts: [post, ...state.likedPosts]
+    }))
     //TO ADD:
     //editComment
 }))
