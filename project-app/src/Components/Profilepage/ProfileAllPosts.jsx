@@ -14,7 +14,7 @@ export const ProfileAllPosts = () => {
       noPosts ? <Text fontSize="xl" fontWeight="bold" color="gray.600" textAlign={"center"}>No posts yet</Text> :
       <Grid templateColumns='repeat(3, 1fr)' gap={4}>
         {posts.map((post) => ( //This maps all the images to <ProfileSinglePost/> with corresponding values
-        <ProfileSinglePost post={post}/>
+        <ProfileSinglePost key={post.id} post={post}/>
         ))}
       </Grid>
       }

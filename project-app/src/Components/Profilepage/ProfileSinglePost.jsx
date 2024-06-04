@@ -141,8 +141,8 @@ if(isLoadingGetUser){
                         overflowY={"scroll"} 
                         maxH={{sm: "45vh",md:"50vh", base: "175px" }}
                         mb={2}>
-                            {post.comments.map((comment) => (
-                                <Comment key={comment.id} comment={comment}/>
+                            {post.comments.map((comment,index) => (
+                                <Comment key={`${comment.createdDate}-${index}`} comment={comment}/>
                             ))}
                         </Flex>
                     </Flex>
