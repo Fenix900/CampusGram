@@ -1,16 +1,13 @@
-import { Box, Button, Flex, FormControl, FormLabel, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, Tooltip, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Textarea, Tooltip, useDisclosure } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import {Link as ReactRouterLink, useNavigate} from 'react-router-dom'
 import postIcon from "../Assets/createPost.png"
 import usePostsStore from '../../globalStates/postsStore'
 import useAuthStore from '../../globalStates/authStore'
 import useProfileInfoStore from '../../globalStates/profileInfoStore'
 import { useDisplayError } from '../../hooks/useDisplayError'
 import {firestore, storage} from "../../Firebase/firebase"
-import { addDoc, arrayRemove, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore'
+import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
-import { async } from '@firebase/util'
 
 const CreatePost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure() //Handle modal
@@ -99,10 +96,10 @@ const CreatePost = () => {
       <ModalFooter>
         <Flex justifyContent="space-between" w={"full"}>
           <Button colorScheme='blue' mr={3} onClick={handleClose} isLoading={isLoading}>
-            Close
+            <Text>Close</Text>
           </Button>
           <Button colorScheme='blue' mr={3} onClick={handleCreatePostFunction} isLoading={isLoading}>
-            Post
+            <Text>Post</Text>
           </Button>
         </Flex>
       </ModalFooter>
