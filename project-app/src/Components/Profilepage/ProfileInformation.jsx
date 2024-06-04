@@ -52,7 +52,7 @@ export const ProfileInformation = () => {
                                     Edit Profile
                                 </Button>
                                 :
-                                <Button bg={"blue.400"} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={handleFollowOrUnfollowUser}>
+                                <Button bg={(isFollowing ? "red.200" : "blue.400")} color={"black"} size={{base:"xs", md:"sm"}} _hover={{bg:"blue.200"}} onClick={handleFollowOrUnfollowUser}>
                                     {isFollowing ? "Unfollow" : "Follow"}
                                 </Button>}
                             </Box>
