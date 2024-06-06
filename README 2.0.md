@@ -1,5 +1,11 @@
 # About my project (Aka Read me file):
 
+#THE SCREENCASTS
+##First part, about the app
+https://www.youtube.com/watch?v=YzUm4Gszkk8
+##Second part, about the code
+https://www.youtube.com/watch?v=pFzVKFcRS0I
+
 ## About me:
 
 Name: Filip Kayar 
