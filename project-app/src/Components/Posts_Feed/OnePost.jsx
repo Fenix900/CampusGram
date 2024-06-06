@@ -13,7 +13,7 @@ export const OnePost = ({post}) => {
         {isLoading ? <Spinner /> :
           <Box pb={100}>
             <PostHeader username={user.username} profilePic={user.profilePicture} postDate={post.createdTime} postOwnerUser={user}/>
-            <Image src={post.imageURL} alt={"Whops, couldn't load image from "+ user.username} my={2}/>
+            <Image src={post.imageURL} alt={"Whops, couldn't load image from "+ user.username} my={2} w={"full"}/>
             <PostFooter username={user.username} isPostInFeed={true} post={post}/>
           </Box>
         }

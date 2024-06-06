@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Image, Link, Spinner, Switch, Text, Toast, Tooltip } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Hide, Image, Link, Show, Spinner, Switch, Text, Toast, Tooltip } from '@chakra-ui/react'
 import React from 'react'
 import {Link as ReactRouterLink, useNavigate} from 'react-router-dom'
 import signOut_icon from "../Assets/logout.png"
@@ -83,9 +83,13 @@ const Sidebar = () => {
                 </Tooltip> 
             </Flex>
             <Flex justifyContent={"center"} alignItems={"center"}>
-                <Text>Darkmode: </Text>
+                <Hide below='md'>
+                    <Text >Darkmode: </Text>
+                </Hide>
                 <Switch p={5} isChecked={isSwitchOn} onChange={toggleSwitch}/>
-                <Text>{isSwitchOn ? 'ON' : 'OFF'}</Text>
+                <Hide below='md'>
+                    <Text>{isSwitchOn ? 'ON' : 'OFF'}</Text>
+                </Hide>
             </Flex>
         </Box>
     )
