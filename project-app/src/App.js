@@ -9,7 +9,7 @@ import { Profile } from './Components/Profilepage/Profile';
 import useAuthStore from '../src/globalStates/authStore';
 import { auth } from '../src/Firebase/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
+//This is main?
 
 function App() { 
   const [validUser , loading, error] = useAuthState(auth);
