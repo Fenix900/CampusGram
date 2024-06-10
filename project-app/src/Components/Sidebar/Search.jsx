@@ -1,6 +1,5 @@
-import { Box, Button, Flex, FormControl, FormHelperText, FormLabel, Image, Input, InputGroup, InputRightAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spinner, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Image, Input, InputGroup, InputRightAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay, Tooltip, useDisclosure } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import searchIcon from "../Assets/search.png"
 import useSearchForUser from '../../hooks/useSearchForUser'
 import { SuggestedUser } from '../suggestionForUsers/SuggestedUser'
@@ -11,7 +10,6 @@ const Search = () => {
   const [username, setUsername] = useState('');
   const {isLoading, users, searchUser, clearUsers} = useSearchForUser();
   const loggedInUser = useAuthStore(state => state.user)
-  const navigate = useNavigate() //If we want to navigate to the user profile when we press their profile (might implment later)
 
   const handleClose = () => { //We handle the close buttons
     onClose() //Close the pop-up
@@ -20,7 +18,16 @@ const Search = () => {
   }
   const handleSearch = (e) => {
     e.preventDefault();
-    searchUser(username);
+    searchUser(username,false);
+  }
+
+  const handleActiveSearch = (e) => {
+    setUsername(e.target.value);
+    if(e.target.value !== ''){
+      searchUser(e.target.value,true);
+    }else{
+      clearUsers()  //Clear the found users
+    }
   }
 
   return (
@@ -56,7 +63,7 @@ const Search = () => {
                   placeholder='Username'
                   _placeholder={{ color: "gray" }}
                   value={username} // Bind state to input value
-                  onChange={(e) => {setUsername(e.target.value)}} //Saves the change in username
+                  onChange={handleActiveSearch} //Saves the change in username
                 />
                 {/* This is the button to the left of the search field */}
                 <InputRightAddon bg={"transparent"} border={"none"}>
@@ -68,7 +75,7 @@ const Search = () => {
             </FormControl>
             </form>
             <Flex flexDirection={"column"}>
-            {users .filter(user => user.usernameLower !== loggedInUser.usernameLower).map(user => ( //Remove user that is logged in (we filter our own profile)
+            {users.filter(user => user.usernameLower !== loggedInUser.usernameLower).map(user => ( //Remove user that is logged in (we filter our own profile)
                 <Flex key={user.userID} p={2} alignItems="center">
                   <SuggestedUser user={user} onClick={handleClose}/>
                 </Flex>

@@ -13,7 +13,7 @@ const useSearchForUser = () => {
       setUsers([])
     }
 
-    const searchUser = async (username) => { //Username is the search string we want to look for in our documents
+    const searchUser = async (username, activeSearch) => { //Username is the search string we want to look for in our documents
         setIsLoading(true)
         if(username === ""){
             showMessage("Field empty","Could not search with empty","warning")
@@ -27,7 +27,9 @@ const useSearchForUser = () => {
           
           if (querySnapshot.empty) {
             setUsers([])
-            showMessage("No users found","Could not find user with name '"+username+"'", "warning")
+            if(!activeSearch){
+              showMessage("No users found","Could not find user with name '"+username+"'", "warning")
+            }
           } else {
             const userList = []; // Collect multiple users
             querySnapshot.forEach((doc) => {

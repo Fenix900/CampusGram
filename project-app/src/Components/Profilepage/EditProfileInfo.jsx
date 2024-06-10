@@ -59,7 +59,7 @@ const EditProfileInfo = ({isOpen, onClose}) => { //Change this so it is custom, 
                         onChange={(e) => setInputs({...inputs, username: e.target.value})}/>
                     </FormControl>
                     <FormControl id="displayName">
-                        <FormLabel fontWeight={600}>Name to be displayed in profile</FormLabel>
+                        <FormLabel fontWeight={600}>Full name</FormLabel>
                         <Input type="text" placeholder="Enter a display name or title" _placeholder={{ opacity: 1, color: 'gray.500' }}
                         value={inputs.displayText || userInfo.profileDisplayName}
                         onChange={(e) => setInputs({...inputs, displayText: e.target.value})}/>
