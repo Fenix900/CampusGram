@@ -42,7 +42,7 @@ const Sidebar = () => {
         top={0}
         left={0}
         px={{base:2,md:4}}>
-            <Flex direction={'column'} gap={20}  w={"full"} height={"95%"}>
+            <Flex direction={'column'} gap={20}  w={"full"} height={"90%"}>
                 <Link as={ReactRouterLink} to={'/home'} pl={2} display={{base:"none", md:"block"}} _hover={{bg:"gray.700"}}>
                     <div>
                         <Text fontSize={'29px'} as='kbd'>
