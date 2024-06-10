@@ -6,13 +6,13 @@ import {getFirestore} from "firebase/firestore"; //For keeping track of users, i
 import {getStorage} from "firebase/storage"; //For storage of images
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAZzyhJ0XpSvya47k2IbrUHICQm1OLvsiM",
-  authDomain: "campusgram-5877d.firebaseapp.com",
-  projectId: "campusgram-5877d",
-  storageBucket: "campusgram-5877d.appspot.com",
-  messagingSenderId: "979713660257",
-  appId: "1:979713660257:web:ed93bc5bc81f86c187e120",
-  measurementId: "G-6LQEH5SKGD"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

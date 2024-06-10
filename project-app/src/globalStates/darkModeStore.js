@@ -1,4 +1,4 @@
-import create from 'zustand';
+import {create} from "zustand"; 
 
 const useSwitchStore = create((set) => {
   // Get switch state from local storage if it exists
