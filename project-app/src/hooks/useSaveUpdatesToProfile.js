@@ -3,7 +3,7 @@ import { firestore, storage } from '../Firebase/firebase'
 import useAuthStore from '../globalStates/authStore';
 import { useDisplayError } from '../hooks/useDisplayError';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import useProfileInfoStore from '../globalStates/profileInfoStore';
 
 const useSaveUpdatesToProfile = () => {
@@ -15,7 +15,7 @@ const useSaveUpdatesToProfile = () => {
     const setUsersProfileInfo = useProfileInfoStore((state) => state.setUserProfileInfo)
 
     //Function to update information about the user
-    const updateProfileInfo = async (inputs, uploadedProfilePic) => {
+    const updateProfileInfo = async (inputs, uploadedProfilePic, onClose) => {
 
         //To check if the user pushed the button again while uploading
         if(isUpdating){
@@ -36,6 +36,15 @@ const useSaveUpdatesToProfile = () => {
                 await uploadString(storageRef, uploadedProfilePic, 'data_url'); //upload image
                 imageURL = await getDownloadURL(storageRef); //Get uploaded image
             }
+            // Check if the new usernameLower already exists
+            const newUsernameLower = inputs.username.toLowerCase();
+            const usernameQuery = query(collection(firestore, "users"), where("usernameLower", "==", newUsernameLower));
+            const querySnapshot = await getDocs(usernameQuery);
+            if(!querySnapshot.empty){
+                showMessage("Whopsi","This username is already in use","error")
+                throw new Error("User document does not exist");
+            }
+
             // Fetch the existing user document from Firestore
             const existingDoc = await getDoc(docRef);
             if (!existingDoc.exists()) {
@@ -66,6 +75,7 @@ const useSaveUpdatesToProfile = () => {
             //Ad updater so profile updates when Save is hit. Now it doesn't update the profile and no fetch to the data base is done ---------
             console.log("The user information", userInfo) //We will have to add this update to the profile later
             //--------------
+            onClose();
             showMessage("Updated","Profile updated successfully","success")
             console.log("updatedUserInfo: ", updatedUserInfo)
             setIsUpdating(false)

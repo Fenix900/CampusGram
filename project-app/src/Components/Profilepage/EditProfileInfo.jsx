@@ -33,12 +33,12 @@ const EditProfileInfo = ({isOpen, onClose}) => { //Change this so it is custom, 
     //This function should update the information
     const saveAndUpdateProfile = async () =>{
       try {
-        await updateProfileInfo(inputs, profilePicture) //Updates the information about the user with inputs and the profilePic
+        await updateProfileInfo(inputs, profilePicture, onClose) //Updates the information about the user with inputs and the profilePic
+        //In the updateProfileInfo we send in onclose so that if the user changes doesn't succeed we dont close the window.
         setProfilePicture(null) //Clear the profilePic that was uploaded
       } catch (e) {
         showMessage("Error",e,"error")
       }
-      onClose(); //Close the pop-up
     }
     
   return (
